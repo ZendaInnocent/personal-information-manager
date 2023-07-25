@@ -3,7 +3,8 @@
     <input type="checkbox" {% if todo.is_completed %} checked {% endif %}>
   </span>
   {{ todo.text }}
-  <span class="btn">
+  <span class="btn" hx-delete="/delete/{{ todo.id }}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="ul"
+    hx-swap="innerHTML" hx-confirm="Are you sure you wish to delete your todo?">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
       viewBox="0 0 16 16">
       <path
