@@ -1,0 +1,3 @@
+<input hx-post="/toggle/{{ todo.id }}" class="me-2 form-check-input" type="checkbox" {% if todo.is_completed %} checked
+  {% endif %} hx-target="this" name="status">
+{{ todo.text }}

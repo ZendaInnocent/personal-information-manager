@@ -26,3 +26,12 @@ def delete(request, id):
         'todos': Todo.objects.all(),
     }
     return render(request, 'todos/partials/list.html', context)
+
+
+def toggle_todo(request, id):
+    template_name = 'todos/partials/checkbox.html'
+    if request.method == 'POST':
+        todo = Todo.objects.get(id=id)
+        todo.is_completed = not todo.is_completed
+        todo.save()
+        return render(request, template_name, {'todo': todo})

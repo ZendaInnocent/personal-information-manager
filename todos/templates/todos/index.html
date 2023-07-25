@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 
-<body>
-  <main class="container my-4">
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  <main class="container my-4 col-md-8">
     <h1>Todos App</h1>
 
     <form method="POST" class="my-3" hx-post="/" hx-target="ul" hx-swap="afterbegin">

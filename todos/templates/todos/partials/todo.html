@@ -1,7 +1,6 @@
 <li class="list-group-item d-flex justify-content-between align-items-center">
   <div>
-    <input class="me-2 form-check-input" type="checkbox" {% if todo.is_completed %} checked {% endif %}>
-    {{ todo.text }}
+    {% include 'todos/partials/checkbox.html' %}
   </div>
   <div>
     <span class="btn">
@@ -13,7 +12,7 @@
           d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
       </svg>
     </span>
-    <span class="btn" hx-delete="/delete/{{ todo.id }}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="ul"
+    <span class="btn" hx-delete="/delete/{{ todo.id }}" hx-target="ul"
       hx-swap="innerHTML" hx-confirm="Are you sure you wish to delete your todo?">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
         viewBox="0 0 16 16">
