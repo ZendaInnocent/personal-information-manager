@@ -55,6 +55,12 @@
   </main>
   <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'js/htmx.min.js' %}"></script>
+  <script>
+    document.body.addEventListener('htmx:afterSwap', function (evt) {
+      const form = document.querySelector("form");
+      form.reset();
+    });
+  </script>
 </body>
 
 </html>
