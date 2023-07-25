@@ -4,11 +4,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Django HTMX Todos</title>
+  <title>Todos App | Django & HTMX</title>
 </head>
 
 <body>
-  <h1>Hello Django & HTMX</h1>
+  <h1>Todos App</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    <input type="text" placeholder="What needs to be done" name="todo" required>
+    <button type="submit">Add</button>
+  </form>
+
+  <ul>
+    {% for todo in todos %}
+      <li>
+        <span><input type="checkbox" {% if todo.is_completed %} checked {% endif %}></span> {{ todo.text }} <button>Delete</button>
+      </li>
+    {% endfor %}
+  </ul>
 </body>
 
 </html>
