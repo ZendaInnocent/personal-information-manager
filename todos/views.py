@@ -7,7 +7,8 @@ def index(request):
 
     if request.method == 'POST':
         text = request.POST.get('todo')
-        Todo.objects.create(text=text)
+        todo = Todo.objects.create(text=text)
+        return render(request, 'todos/todo.html', {'todo': todo})
 
     template_name = 'todos/index.html'
     context = {

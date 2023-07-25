@@ -13,7 +13,7 @@
   <main class="container">
     <h1>Todos App</h1>
 
-    <form method="POST" class="my-3">
+    <form method="POST" class="my-3" hx-post="/" hx-target="ul" hx-swap="afterbegin">
       {% csrf_token %}
       <div>
         <div class="form-floating mb-3">
@@ -26,7 +26,7 @@
           Add
         </button>
       </div>
-      </form>
+    </form>
 
     <div class="border mb-3"></div>
 
@@ -50,6 +50,8 @@
       {% endfor %}
       </ul>
   </main>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/htmx.min.js' %}"></script>
 </body>
 
 </html>
