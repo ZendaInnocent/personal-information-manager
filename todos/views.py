@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from .models import Todo
 from django.contrib import messages
+
+from .models import Todo
 
 
 def index(request):
