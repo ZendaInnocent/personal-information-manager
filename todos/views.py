@@ -39,13 +39,15 @@ def toggle_todo(request, id):
         return render(request, template_name, {'todo': todo})
 
 
-def update(request, id):
-    # messages.success(request, 'Todo edited successful.')
+def update_todo(request, id):
     todo = Todo.objects.get(id=id)
+
     if request.method == 'PUT':
         data = QueryDict(request.body)
-        todo.text = data['todo']
+        todo.text = data.get('todo')
         todo.save()
-        messages.success(request, 'Todo edited successful.')
-        return render(request, 'todos/partials/todo.html', {todo: todo.refresh_from_db()})
-    return render(request, 'todos/partials/form.html', {'todo': todo})
+        messages.success(request, 'Todo updated successful.')
+        return render(request, 'todos/partials/todo.html', {'todo': todo})
+
+    context = {'todo': todo}
+    return render(request, 'todos/partials/form.html', context)
