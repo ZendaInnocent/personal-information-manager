@@ -1,0 +1,25 @@
+<form method="POST" class="my-3" hx-post="/" hx-target="ul" hx-swap="afterbegin">
+  <div>
+    <div class="form-floating mb-3">
+      <input type="text" {% if todo %} value="{{ todo.text }}" {% endif %} class="form-control" id="todoText"
+        placeholder="What needs to be done" name="todo" required>
+      <label for="todoText">
+        What needs to be done
+      </label>
+    </div>
+    {% if todo %}
+    <button type="submit" class="btn btn-primary" hx-put="/update/{{ todo.id }}" hx-target="#todo-{{ todo.id }}"
+      hx-swap="outerHtml" hx-sync="closest form:abort">
+      Update
+    </button>
+    {% else %}
+    <button type="submit" class="btn btn-primary">
+      Add
+    </button>
+    {% endif %}
+
+    <div class="spinner-border htmx-indicator ms-2" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</form>

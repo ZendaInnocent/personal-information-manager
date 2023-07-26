@@ -13,23 +13,7 @@
   <main class="container my-4 col-md-8">
     <h1>Todos App</h1>
     
-    <form method="POST" class="my-3" hx-post="/" hx-target="ul" hx-swap="afterbegin">
-      {% csrf_token %}
-      <div>
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="todoText" placeholder="What needs to be done" name="todo" required>
-          <label for="todoText">
-            What needs to be done
-          </label>
-        </div>
-        <button type="submit" class="btn btn-primary">
-          Add
-        </button>
-        <div class="spinner-border htmx-indicator ms-2" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    </form>
+    {% include 'todos/partials/form.html' %}
 
     <div class="border mb-3"></div>
 

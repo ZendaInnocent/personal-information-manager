@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
+from django.http import QueryDict
 
 from .models import Todo
 
@@ -36,3 +37,15 @@ def toggle_todo(request, id):
         todo.is_completed = not todo.is_completed
         todo.save()
         return render(request, template_name, {'todo': todo})
+
+
+def update(request, id):
+    # messages.success(request, 'Todo edited successful.')
+    todo = Todo.objects.get(id=id)
+    if request.method == 'PUT':
+        data = QueryDict(request.body)
+        todo.text = data['todo']
+        todo.save()
+        messages.success(request, 'Todo edited successful.')
+        return render(request, 'todos/partials/todo.html', {todo: todo.refresh_from_db()})
+    return render(request, 'todos/partials/form.html', {'todo': todo})

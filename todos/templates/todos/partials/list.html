@@ -1,5 +1,7 @@
 <ul class="list-group">
   {% for todo in todos %}
-  {% include 'todos/partials/todo.html' with todo=todo %}
+  <li class="list-group-item d-flex justify-content-between align-items-center" id="todo-{{ todo.id }}">
+    {% include 'todos/partials/todo.html' with todo=todo %}
+  </li>
   {% endfor %}
 </ul>
