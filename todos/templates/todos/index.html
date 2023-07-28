@@ -1,38 +1,21 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todos App | Django & HTMX</title>
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-</head>
+{% block content %}
+<h1>Todos App</h1>
 
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-  <main class="container my-4 col-md-8">
-    <h1>Todos App</h1>
-    
-    {% include 'todos/partials/form.html' %}
+{% include 'todos/partials/form.html' %}
 
-    <div class="border mb-3"></div>
+<div class="border mb-3"></div>
 
-    {% include 'todos/partials/list.html' %}
-    <div data-toast-container class="toast-container position-fixed top-0 end-0 p-3">
-      <div data-toast-template class="toast align-items-center border-0" role="alert" aria-live="assertive"
-        aria-atomic="true">
-        <div class="d-flex">
-          <div data-toast-body class="toast-body"></div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-            aria-label="Close"></button>
-        </div>
-      </div>
+{% include 'todos/partials/list.html' %}
+<div data-toast-container class="toast-container position-fixed top-0 end-0 p-3">
+  <div data-toast-template class="toast align-items-center border-0" role="alert" aria-live="assertive"
+    aria-atomic="true">
+    <div class="d-flex">
+      <div data-toast-body class="toast-body"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
     </div>
-  </main>
-  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'js/htmx.min.js' %}"></script>
-  <script src="{% static 'js/main.js' %}">
-  </script>
-</body>
-
-</html>
+  </div>
+</div>
+{% endblock content %}
