@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import QueryDict
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 
 from .models import Todo
 
@@ -38,7 +38,7 @@ def delete(request, id):
 
 
 def toggle_todo(request, id):
-    template_name = 'todos/partials/checkbox.html'
+    template_name = 'todos/partials/todo.html'
 
     if request.method == 'POST':
         todo = Todo.objects.get(id=id)
@@ -65,3 +65,13 @@ def update_todo(request, id):
 
     context = {'todo': todo}
     return render(request, 'todos/partials/form.html', context)
+
+
+def sort_todos(request):
+    _todos = request.POST.getlist('todo')
+    print(_todos)
+    todos = Todo.objects.filter(user=request.user)
+
+    template_name = 'todos/partials/list.html'
+    context = {'todos': todos}
+    return render(request, template_name, context)

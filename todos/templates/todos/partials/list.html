@@ -1,5 +1,7 @@
 <ul class="list-group">
+  <form class="sortable" hx-trigger="end" hx-post="{% url 'todos:sort-todos' %}">
   {% for todo in todos %}
   {% include 'todos/partials/todo.html' with todo=todo %}
   {% endfor %}
+  </form>
 </ul>

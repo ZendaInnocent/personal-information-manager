@@ -1,4 +1,6 @@
-<li id="todo-{{ todo.id }}" class="list-group-item d-flex justify-content-between align-items-center">
+<li id="todo-{{ todo.id }}" class="list-group-item d-flex justify-content-between align-items-center"
+  style="cursor: pointer;" hx-post="/toggle/{{ todo.id }}" hx-swap="outerHTML">
+  <input type="hidden" name="todo" value="{{ forloop.counter }}">
   <div>
     {% include 'todos/partials/checkbox.html' with todo=todo %}
   </div>
