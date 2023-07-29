@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'todos.apps.TodosConfig',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +139,7 @@ MESSAGE_TAGS = {
     messages.WARNING: "text-dark bg-warning",
     messages.ERROR: "text-white bg-danger",
 }
+
+CRISPY_ALLOWED_TEMPLETE_PACKS = 'bootstrap5'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

@@ -1,18 +1,11 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <form method="POST">
   {% csrf_token %}
-  <!-- <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="username" placeholder="Username">
-    <label for="username">Username</label>
-  </div>
-  <div class="form-floating">
-    <input type="password" class="form-control" id="password" placeholder="Password">
-    <label for="password">Password</label>
-  </div> -->
+  {{ form | crispy }}
 
-  {{ form.as_div }}
   <button type="submit" class="btn btn-primary my-3">Login</button>
 </form>
 {% endblock content %}
