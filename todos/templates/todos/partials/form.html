@@ -1,4 +1,4 @@
-<form method="POST" class="my-3" hx-post="/" hx-target="ul" hx-swap="afterbegin">
+<form method="POST" class="my-3" hx-post="/" hx-target="#todos-list" hx-swap="outerHTML">
   <div>
     <div class="form-floating mb-3">
       <input {% if todo %} value="{{ todo.text }}" {% endif %} type="text" class="form-control" id="todoText"
