@@ -23,6 +23,9 @@
   <script src="{% static 'js/htmx.min.js' %}"></script>
   <script src="{% static 'js/Sortable.min.js' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
+  {% if debug %}
+  <script src="{% static 'js/django-debug-toolbar.js' %}"></script>
+  {% endif %}
 </body>
 
 </html>

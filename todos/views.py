@@ -4,22 +4,18 @@ from django.http import QueryDict
 from django.contrib.auth.decorators import login_required
 
 from .models import Todo, UserTodo
-from .utils import get_order_value, reorder
+from .utils import reorder
 
-
-def test_user(user, todo):
-    return user == todo.user
 
 @login_required
 def index(request):
 
     if request.method == 'POST':
         text = request.POST.get('todo')
-        todo = Todo.objects.create(text=text, user=request.user)
-        todo.usertodo_set.create(
-            user=request.user, order=get_order_value(request.user))
+        Todo.objects.create(text=text, user=request.user)
 
-        user_todos = UserTodo.objects.filter(user=request.user)
+        user_todos = UserTodo.objects.prefetched_user_todo().filter(
+            user=request.user)
 
         context = {
             'user_todos': user_todos,
@@ -28,7 +24,8 @@ def index(request):
 
 
     template_name = 'todos/index.html'
-    user_todos = UserTodo.objects.filter(user=request.user)
+    user_todos = UserTodo.objects.prefetched_user_todo().filter(
+        user=request.user)
 
     context = {
         'user_todos': user_todos
@@ -37,15 +34,17 @@ def index(request):
 
 
 def delete(request, id):
-    todo = Todo.objects.get(id=id)
+    todo = Todo.objects.prefetched_user().filter(user=request.user).get(id=id)
 
     if todo.user == request.user:
-        user_todo = UserTodo.objects.get(user=request.user, todo=todo)
+        user_todo = UserTodo.objects.prefetched_user_todo().filter(
+            user=request.user).get(todo=todo)
         user_todo.delete()
         reorder(request.user)
         messages.success(request, 'Todo deleted successful.')
 
-    user_todos = UserTodo.objects.filter(user=request.user)
+    user_todos = UserTodo.objects.prefetched_user_todo().filter(
+        user=request.user)
 
     context = {
         'user_todos': user_todos,
@@ -57,18 +56,19 @@ def toggle_todo(request, id):
     template_name = 'todos/partials/checkbox.html'
 
     if request.method == 'POST':
-        todo = Todo.objects.get(id=id)
+        todo = Todo.objects.prefetched_user().filter(user=request.user).get(id=id)
 
         if todo.user == request.user:
             todo.is_completed = not todo.is_completed
             todo.save()
 
-        user_todo = UserTodo.objects.get(user=request.user, todo=todo)
+        user_todo = UserTodo.objects.prefetched_user_todo().get(
+            user=request.user, todo=todo)
         return render(request, template_name, {'todo': user_todo.todo})
 
 
 def update_todo(request, id):
-    todo = Todo.objects.get(id=id)
+    todo = Todo.objects.prefetched_user().get(id=id)
 
     if request.method == 'PUT':
         data = QueryDict(request.body)
@@ -80,7 +80,7 @@ def update_todo(request, id):
             messages.error(
                 request, 'You are not have access to update this todo.')
 
-        user_todo = UserTodo.objects.get(todo=todo, user=request.user)
+        user_todo = UserTodo.objects.prefetched_user_todo().filter(user=request.user).get(todo=todo)
         return render(request, 'todos/partials/todo.html', {'user_todo': user_todo})
 
     context = {'todo': todo}
@@ -90,12 +90,19 @@ def update_todo(request, id):
 def sort_todos(request):
     current_todos_order = request.POST.getlist('todo')
 
-    for index, todo_pk in enumerate(current_todos_order, start=1):
-        user_todo = UserTodo.objects.get(pk=todo_pk)
-        user_todo.order = index
-        user_todo.save()
+    new_ordered_user_todos = []
 
-    user_todos = UserTodo.objects.filter(user=request.user)
+    for index, todo_pk in enumerate(current_todos_order, start=1):
+        todo = Todo.objects.prefetched_user().filter(
+            user=request.user).get(id=todo_pk)
+        user_todo = user_todos.get(todo=todo)
+        user_todo.order = index
+        new_ordered_user_todos.append(user_todo)
+
+    UserTodo.objects.bulk_update(new_ordered_user_todos, fields=['order'])
+
+    user_todos = UserTodo.objects.prefetched_user_todo().filter(
+        user=request.user)
 
     template_name = 'todos/partials/list.html'
     context = {'user_todos': user_todos}

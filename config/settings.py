@@ -42,17 +42,19 @@ INSTALLED_APPS = [
     'todos.apps.TodosConfig',
     'crispy_forms',
     'crispy_bootstrap5',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'todos.middleware.HtmxMessageMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'todos.middleware.HtmxMessageMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -143,3 +145,7 @@ MESSAGE_TAGS = {
 CRISPY_ALLOWED_TEMPLETE_PACKS = 'bootstrap5'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
