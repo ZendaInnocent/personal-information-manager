@@ -1,22 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Todos</h1>
+<div class="position-relative">
+  <h1>Todos</h1>
 
-{% include 'todos/partials/form.html' %}
+  {% include 'todos/partials/form.html' %}
 
-<div class="border mb-3"></div>
+  <div class="border mb-3"></div>
 
-{% include 'todos/partials/list.html' %}
-
-<div data-toast-container class="toast-container position-fixed top-0 end-0 p-3">
-  <div data-toast-template class="toast align-items-center border-0" role="alert" aria-live="assertive"
-    aria-atomic="true">
-    <div class="d-flex">
-      <div data-toast-body class="toast-body"></div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-        aria-label="Close"></button>
-    </div>
-  </div>
+  {% include 'todos/partials/list.html' %}
 </div>
 {% endblock content %}
