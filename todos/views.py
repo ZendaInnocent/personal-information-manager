@@ -1,7 +1,7 @@
-from django.shortcuts import render
 from django.contrib import messages
-from django.http import QueryDict
 from django.contrib.auth.decorators import login_required
+from django.http import QueryDict
+from django.shortcuts import render
 
 from .models import Todo, UserTodo
 from .utils import reorder
@@ -9,42 +9,38 @@ from .utils import reorder
 
 @login_required
 def index(request):
-
     if request.method == 'POST':
         text = request.POST.get('todo')
         Todo.objects.create(text=text, user=request.user)
 
-        user_todos = UserTodo.objects.prefetched_user_todo().filter(
-            user=request.user)
+        user_todos = UserTodo.objects.prefetched_user_todo().filter(user=request.user)
 
         context = {
             'user_todos': user_todos,
         }
         return render(request, 'todos/partials/list.html', context)
 
-
     template_name = 'todos/index.html'
-    user_todos = UserTodo.objects.prefetched_user_todo().filter(
-        user=request.user)
+    user_todos = UserTodo.objects.prefetched_user_todo().filter(user=request.user)
 
-    context = {
-        'user_todos': user_todos
-    }
+    context = {'user_todos': user_todos}
     return render(request, template_name, context)
 
 
-def delete(request, id):
+def delete_todo(request, id):
     todo = Todo.objects.prefetched_user().filter(user=request.user).get(id=id)
 
     if todo.user == request.user:
-        user_todo = UserTodo.objects.prefetched_user_todo().filter(
-            user=request.user).get(todo=todo)
+        user_todo = (
+            UserTodo.objects.prefetched_user_todo()
+            .filter(user=request.user)
+            .get(todo=todo)
+        )
         user_todo.delete()
         reorder(request.user)
         messages.success(request, 'Todo deleted successful.')
 
-    user_todos = UserTodo.objects.prefetched_user_todo().filter(
-        user=request.user)
+    user_todos = UserTodo.objects.prefetched_user_todo().filter(user=request.user)
 
     context = {
         'user_todos': user_todos,
@@ -63,7 +59,8 @@ def toggle_todo(request, id):
             todo.save()
 
         user_todo = UserTodo.objects.prefetched_user_todo().get(
-            user=request.user, todo=todo)
+            user=request.user, todo=todo
+        )
         return render(request, template_name, {'todo': user_todo.todo})
 
 
@@ -77,10 +74,13 @@ def update_todo(request, id):
             todo.save()
             messages.success(request, 'Todo updated successful.')
         else:
-            messages.error(
-                request, 'You are not have access to update this todo.')
+            messages.error(request, 'You are not have access to update this todo.')
 
-        user_todo = UserTodo.objects.prefetched_user_todo().filter(user=request.user).get(todo=todo)
+        user_todo = (
+            UserTodo.objects.prefetched_user_todo()
+            .filter(user=request.user)
+            .get(todo=todo)
+        )
         return render(request, 'todos/partials/todo.html', {'user_todo': user_todo})
 
     context = {'todo': todo}
@@ -93,16 +93,14 @@ def sort_todos(request):
     new_ordered_user_todos = []
 
     for index, todo_pk in enumerate(current_todos_order, start=1):
-        todo = Todo.objects.prefetched_user().filter(
-            user=request.user).get(id=todo_pk)
+        todo = Todo.objects.prefetched_user().filter(user=request.user).get(id=todo_pk)
         user_todo = user_todos.get(todo=todo)
         user_todo.order = index
         new_ordered_user_todos.append(user_todo)
 
     UserTodo.objects.bulk_update(new_ordered_user_todos, fields=['order'])
 
-    user_todos = UserTodo.objects.prefetched_user_todo().filter(
-        user=request.user)
+    user_todos = UserTodo.objects.prefetched_user_todo().filter(user=request.user)
 
     template_name = 'todos/partials/list.html'
     context = {'user_todos': user_todos}
