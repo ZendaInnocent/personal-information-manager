@@ -88,13 +88,16 @@ def update_todo(request, id):
 
 
 def sort_todos(request):
-    current_todos_order = request.POST.getlist('todo')
+    current_todos_order = request.POST.getlist('user_todo')
 
     new_ordered_user_todos = []
 
-    for index, todo_pk in enumerate(current_todos_order, start=1):
-        todo = Todo.objects.prefetched_user().filter(user=request.user).get(id=todo_pk)
-        user_todo = user_todos.get(todo=todo)
+    for index, user_todo_pk in enumerate(current_todos_order, start=1):
+        user_todo = (
+            UserTodo.objects.prefetched_user_todo()
+            .filter(user=request.user)
+            .get(pk=user_todo_pk)
+        )
         user_todo.order = index
         new_ordered_user_todos.append(user_todo)
 

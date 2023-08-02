@@ -1,6 +1,6 @@
 <li id="todo-{{ user_todo.todo.id }}" class="list-group-item d-flex justify-content-between align-items-center"
   style="cursor: pointer;" hx-swap="outerHTML">
-  <input type="hidden" name="todo" value="{{ user_todo.id }}">
+  <input type="hidden" name="user_todo" value="{{ user_todo.id }}">
 
   {% include 'todos/partials/checkbox.html' with todo=user_todo.todo %}
 
