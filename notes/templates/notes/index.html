@@ -3,15 +3,19 @@
 {% block content %}
 <h1>Notes</h1>
 
-<ul>
-
+<div class="row py-3">
   {% for note in notes %}
-  <li>
-    <a href="{{ note.get_absolute_url }}">
-      {{ note }}
-    </a>
-  </li>
+  <div class="col-sm-6 mb-3">
+    <div class="card" style="background-color: {{ note.color }};">
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="{{ note.get_absolute_url }}" class="btn btn-primary">
+          View
+        </a>
+      </div>
+    </div>
+  </div>
   {% endfor %}
-
-</ul>
+</div>
 {% endblock content %}

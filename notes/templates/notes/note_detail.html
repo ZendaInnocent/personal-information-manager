@@ -4,6 +4,6 @@
 <h1>{{ note.title }}</h1>
 
 <p>
-  {{ note.content }}
+  {{ note.content | safe }}
 </p>
 {% endblock content %}

@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block extra_head %}
+{{ form.media }}
+{% endblock extra_head %}
 {% load crispy_forms_tags %}
 
 {% block content %}

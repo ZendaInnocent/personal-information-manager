@@ -9,6 +9,7 @@ django-decouple = "*"
 django-crispy-forms = "*"
 crispy-bootstrap5 = "*"
 django-htmx = "*"
+django-tinymce = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

@@ -7,4 +7,5 @@ urlpatterns = [
     path('notes/', include('notes.urls')),
     path('accounts/', include('accounts.urls')),
     path('__debug__', include('debug_toolbar.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ]
