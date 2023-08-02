@@ -6,16 +6,19 @@
 <div class="row py-3">
   {% for note in notes %}
   <div class="col-sm-6 mb-3">
-    <div class="card" style="background-color: {{ note.color }};">
+    <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <h5 class="card-title">{{ note.title }}</h5>
+        <p class="card-text">{{ note.content | safe | truncatechars:60 }}</p>
         <a href="{{ note.get_absolute_url }}" class="btn btn-primary">
           View
         </a>
       </div>
     </div>
   </div>
+  {% empty %}
+  <p class="lead">No notes yet. <a href="{% url 'notes:note-create' %}" class="btn btn-primary">Add</a>
+  </p>
   {% endfor %}
 </div>
 {% endblock content %}

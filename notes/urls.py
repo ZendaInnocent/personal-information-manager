@@ -7,14 +7,14 @@ app_name = 'notes'
 urlpatterns = [
     path('', views.index, name='notes-index'),
     path('create/', views.NoteCreateView.as_view(), name='note-create'),
-    path('<int:pk>/', views.NoteDetailView.as_view(), name='note-detail'),
+    path('<slug:slug>/', views.NoteDetailView.as_view(), name='note-detail'),
     path(
-        '<int:pk>/update/',
+        '<slug:slug>/update/',
         views.NoteUpdateView.as_view(),
         name='note-update',
     ),
     path(
-        '<int:pk>/delete/',
+        '<slug:slug>/delete/',
         views.NoteDeleteView.as_view(),
         name='note-delete',
     ),

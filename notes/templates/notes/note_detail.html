@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{ note.title }}</h1>
+<div class="d-flex justify-content-between align-items-center">
+  <h1>{{ note.title }}</h1>
+
+  <div>
+    <a href="{% url 'notes:note-update' note.slug %}" class="btn btn-primary">
+      Edit
+    </a>
+    <a href="{% url 'notes:note-delete' note.slug %}" class="btn btn-danger">
+      Delete
+    </a>
+  </div>
+</div>
 
 <p>
   {{ note.content | safe }}
