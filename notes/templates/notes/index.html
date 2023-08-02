@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Notes</h1>
+
+<ul>
+
+  {% for note in notes %}
+  <li>
+    <a href="{{ note.get_absolute_url }}">
+      {{ note }}
+    </a>
+  </li>
+  {% endfor %}
+
+</ul>
+{% endblock content %}
