@@ -6,4 +6,16 @@ from .models import Note
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = '__all__'
+        fields = (
+            'user',
+            'title',
+            'content',
+            'color',
+        )
+        widgets = {
+            'user': forms.TextInput(
+                attrs={
+                    'type': 'hidden',
+                }
+            )
+        }
