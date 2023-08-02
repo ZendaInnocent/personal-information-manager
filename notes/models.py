@@ -13,7 +13,7 @@ class Note(models.Model):
     )
     title = models.CharField(max_length=100)
     content = models.TextField()
-    color = models.CharField(max_length=25)
+    color = models.CharField(max_length=7, default='#FFFFFF')
 
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)

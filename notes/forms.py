@@ -17,5 +17,11 @@ class NoteForm(forms.ModelForm):
                 attrs={
                     'type': 'hidden',
                 }
-            )
+            ),
+            'color': forms.TextInput(
+                attrs={
+                    'type': 'color',
+                    'class': 'form-control form-control-color',
+                },
+            ),
         }
