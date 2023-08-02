@@ -15,6 +15,9 @@ class Note(models.Model):
     content = models.TextField()
     color = models.CharField(max_length=25)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.title
 
