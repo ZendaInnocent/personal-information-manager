@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="" method="POST">
+  {% csrf_token %}
+  Do you want to delete?
+  <button class="btn btn-primary">Yes</button>
+  <a href="{{ note.get_absolute_url }}" class="btn btn-secondary">No</a>
+</form>
+
+{% endblock content %}

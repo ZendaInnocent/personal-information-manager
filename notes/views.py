@@ -1,8 +1,6 @@
-from typing import Any
-
-from django.db import models
 from django.shortcuts import render
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, DetailView, UpdateView
 
 from . import forms
 from .models import Note
@@ -26,3 +24,8 @@ class NoteDetailView(DetailView):
 class NoteUpdateView(UpdateView):
     model = Note
     form_class = forms.NoteForm
+
+
+class NoteDeleteView(DeleteView):
+    model = Note
+    success_url = reverse_lazy('notes:notes-index')
