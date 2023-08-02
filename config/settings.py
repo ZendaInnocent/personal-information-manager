@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'billing.apps.BillingConfig',
     'notes.apps.NotesConfig',
     'accounts.apps.AccountsConfig',
     'django.contrib.admin',
