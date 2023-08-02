@@ -2,7 +2,7 @@ from typing import Any
 
 from django.db import models
 from django.shortcuts import render
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import CreateView, DetailView, UpdateView
 
 from . import forms
 from .models import Note
@@ -21,3 +21,8 @@ class NoteCreateView(CreateView):
 
 class NoteDetailView(DetailView):
     model = Note
+
+
+class NoteUpdateView(UpdateView):
+    model = Note
+    form_class = forms.NoteForm
