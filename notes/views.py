@@ -17,3 +17,7 @@ def index(request):
 class NoteCreateView(CreateView):
     model = Note
     form_class = forms.NoteForm
+
+
+class NoteDetailView(DetailView):
+    model = Note
