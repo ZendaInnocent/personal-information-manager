@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import QueryDict
+from django.http import HttpResponse, QueryDict
 from django.shortcuts import render
 
 from .models import Todo, UserTodo
@@ -27,6 +27,7 @@ def index(request):
     return render(request, template_name, context)
 
 
+@login_required
 def delete_todo(request, id):
     todo = Todo.objects.prefetched_user().filter(user=request.user).get(id=id)
 
@@ -48,6 +49,7 @@ def delete_todo(request, id):
     return render(request, 'todos/partials/list.html', context)
 
 
+@login_required
 def toggle_todo(request, id):
     template_name = 'todos/partials/checkbox.html'
 
@@ -64,6 +66,7 @@ def toggle_todo(request, id):
         return render(request, template_name, {'todo': user_todo.todo})
 
 
+@login_required
 def update_todo(request, id):
     todo = Todo.objects.prefetched_user().get(id=id)
 
@@ -73,6 +76,7 @@ def update_todo(request, id):
             todo.text = data.get('todo')
             todo.save()
             messages.success(request, 'Todo updated successful.')
+            return HttpResponse(status=204)
         else:
             messages.error(request, 'You are not have access to update this todo.')
 
@@ -87,6 +91,7 @@ def update_todo(request, id):
     return render(request, 'todos/partials/form.html', context)
 
 
+@login_required
 def sort_todos(request):
     current_todos_order = request.POST.getlist('user_todo')
 
