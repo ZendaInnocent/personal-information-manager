@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from billing.models import Plan
+from pim.billing.models import Plan
 
 
 @admin.register(Plan)

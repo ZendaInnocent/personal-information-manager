@@ -1,8 +1,8 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from billing.utils import INTERVALS as DATE_INTERVALS
-from billing.utils import currencies
+from pim.billing.utils import INTERVALS as DATE_INTERVALS
+from pim.billing.utils import currencies
 
 
 class IntervalChoices(models.TextChoices):

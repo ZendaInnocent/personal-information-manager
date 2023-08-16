@@ -19,7 +19,7 @@ def reorder(user):
         return
 
     number_of_user_todos = existing_user_todos.count()
-    new_ordering = range(1, number_of_user_todos+1)
+    new_ordering = range(1, number_of_user_todos + 1)
 
     new_user_todos = []
 

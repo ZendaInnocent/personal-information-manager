@@ -36,10 +36,11 @@ ALLOWED_HOSTS = config(
 # Application definition
 
 INSTALLED_APPS = [
-    'accounts',
-    'billing',
-    'main',
-    'notes',
+    'pim.accounts',
+    'pim.billing',
+    'pim.main',
+    'pim.notes',
+    'pim.todos',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,7 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'todos.apps.TodosConfig',
     'crispy_forms',
     'crispy_bootstrap5',
     'debug_toolbar',
@@ -60,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django_htmx.middleware.HtmxMiddleware',
-    'todos.middleware.HtmxMessageMiddleware',
+    'pim.todos.middleware.HtmxMessageMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

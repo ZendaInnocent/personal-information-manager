@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 
-from billing.models.plans import Plan
+from pim.billing.models.plans import Plan
 
 
 class HomeView(ListView):

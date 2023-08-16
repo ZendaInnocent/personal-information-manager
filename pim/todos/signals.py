@@ -10,6 +10,5 @@ def create_user_todo(sender, created, instance, **kwargs):
     """Create a UserTodo when Todo is saved."""
     if created:
         UserTodo.objects.create(
-            todo=instance,
-            user=instance.user,
-            order=get_order_value(user=instance.user))
+            todo=instance, user=instance.user, order=get_order_value(user=instance.user)
+        )

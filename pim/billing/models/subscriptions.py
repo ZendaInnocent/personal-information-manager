@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from billing.models import Plan
+from pim.billing.models import Plan
 
 User = get_user_model()
 

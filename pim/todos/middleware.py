@@ -1,5 +1,3 @@
-import json
-
 from django.contrib.messages import get_messages
 from django.template.loader import render_to_string
 from django.utils.deprecation import MiddlewareMixin
