@@ -23,7 +23,7 @@ jobs:
           python -m pip install --upgrade pipenv
           python -m venv .venv
           source .venv/bin/activate
-          pipenv install --dev
+          pipenv install --deploy --dev
 
       - name: Test the Project
         run: pytest
