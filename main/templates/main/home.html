@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<h2 class="text-center mb-3">Pricing</h2>
+
+<div class="row">
+  {% for plan in plans %}
+
+  <div class="col-lg-4 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ plan.name }}</h5>
+        <br><br>
+        <span class="h3">
+          {{ plan.currency }} {{ plan.amount | intcomma }}
+        </span>/{{ plan.interval }}
+        <br><br>
+        <div class="d-grid my-3">
+          <button class="btn btn-outline-primary btn-block" hx-get="{% url 'main:get-started' %}?{{ plan.name }}"
+            hx-target="body">
+            Select
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% empty %}
+  No plans yet
+  {% endfor %}
+</div>
+{% endblock content %}
