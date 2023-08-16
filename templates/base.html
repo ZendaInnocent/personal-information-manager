@@ -14,7 +14,7 @@
   {% block extra_head %} {% endblock extra_head %}
 </head>
 
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="min-vh-100 d-flex flex-column">
   <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
     <div class="container">
       <a class="navbar-brand" href="#">Elegant PIM</a>
@@ -47,7 +47,7 @@
     {% endblock content %}
   </main>
 
-  <footer class="container-fluid bg-light">
+  <footer class="container-fluid bg-light mt-auto">
     <div class="container py-3">
       Made with Love by Innocent. &copy; 2023
     </div>
