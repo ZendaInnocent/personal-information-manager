@@ -1,6 +1,7 @@
 import factory
-from accounts.tests.factories import UserFactory
-from todos.models import Todo
+
+from pim.accounts.tests.factories import UserFactory
+from pim.todos.models import Todo
 
 
 class TodoFactory(factory.django.DjangoModelFactory):

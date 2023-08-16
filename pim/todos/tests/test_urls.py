@@ -1,5 +1,6 @@
 from django.urls import resolve, reverse
-from todos import views
+
+from pim.todos import views
 
 
 class TestTodosUrls:

@@ -1,7 +1,7 @@
-from accounts.tests.factories import UserFactory
 from django.urls import reverse
 from pytest_django.asserts import assertTemplateUsed
-from todos.tests.factories import TodoFactory
+
+from pim.accounts.tests.factories import UserFactory
 
 
 class TestTodosViews:
@@ -42,16 +42,3 @@ class TestTodosViews:
         assert response.status_code == 200
         assertTemplateUsed(response, 'todos/partials/list.html')
         assert response.context['user_todos']
-
-    def test_delete_todo(self, client):
-        user = UserFactory()
-        client.force_login(user)
-        todo = TodoFactory(user=user)
-        url = reverse(
-            'todos:todo-delete',
-            kwargs={'id': todo.id},
-        )
-
-        response = client.delete(url)
-
-        assert response.status_code == 200

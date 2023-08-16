@@ -1,4 +1,4 @@
-from accounts.tests.factories import UserFactory
+from pim.accounts.tests.factories import UserFactory
 
 
 class TestTodosModel:
