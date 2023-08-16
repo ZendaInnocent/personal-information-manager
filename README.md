@@ -80,6 +80,12 @@ An application to help organize personal data and information.
 
     Rename '.env_sample' to '.env', the fill the value accordingly.
 
+    Install the git hook script for pre-commit
+
+    ```bash
+    pre-commit install
+    ```
+
 5. Apply database migrations
 
     ```bash
