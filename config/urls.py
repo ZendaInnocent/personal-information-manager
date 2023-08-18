@@ -7,6 +7,7 @@ urlpatterns = [
     path('billing/', include('pim.billing.urls')),
     path('todos/', include('pim.todos.urls')),
     path('notes/', include('pim.notes.urls')),
+    path('accounts/', include('allauth.urls')),
     path('accounts/', include('pim.accounts.urls')),
     path('__debug__', include('debug_toolbar.urls')),
     path('tinymce/', include('tinymce.urls')),

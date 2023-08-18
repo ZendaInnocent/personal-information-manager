@@ -12,6 +12,7 @@ django-htmx = "*"
 django-tinymce = "*"
 pycountry = "*"
 pre-commit = "*"
+django-allauth = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

@@ -53,6 +53,9 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_htmx',
     'tinymce',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -161,3 +164,17 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+# Django Auth
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+SITE_ID = 1
