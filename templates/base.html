@@ -24,18 +24,37 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          {% if request.user.is_authenticated %}
           <li class="nav-item">
             <a href="{% url 'todos:todos-index' %}"
               class="nav-link {% if request.path == '/todos/' %} active {% endif %}">
               Todos
             </a>
           </li>
+
           <li class="nav-item">
             <a href="{% url 'notes:notes-index' %}"
               class="nav-link {% if request.path == '/notes/' %} active {% endif %}">
               Notes
             </a>
           </li>
+
+          {% else %}
+          <li class="nav-item">
+            <a href="{% url 'account_login' %}"
+              class="nav-link {% if request.path == '/accounts/login/' %} active {% endif %} ">
+              Log In
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url 'account_signup' %}"
+              class="nav-link {% if request.path == '/accounts/signup/' %} active {% endif %}">
+              Sign Up
+            </a>
+          </li>
+
+          {% endif %}
         </ul>
       </div>
     </div>
