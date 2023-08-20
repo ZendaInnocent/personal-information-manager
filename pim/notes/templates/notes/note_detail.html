@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center">
@@ -6,10 +7,10 @@
 
   <div>
     <a href="{% url 'notes:note-update' note.slug %}" class="btn btn-primary">
-      Edit
+      {% trans 'Edit' %}
     </a>
     <a href="{% url 'notes:note-delete' note.slug %}" class="btn btn-danger">
-      Delete
+      {% trans 'Delete' %}
     </a>
   </div>
 </div>

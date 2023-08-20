@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
-<h1>Notes</h1>
+<h1>{% trans 'Notes' %}</h1>
 
 <div class="row py-3">
   {% for note in notes %}
@@ -11,13 +12,16 @@
         <h5 class="card-title">{{ note.title }}</h5>
         <p class="card-text">{{ note.content | safe | truncatechars:60 }}</p>
         <a href="{{ note.get_absolute_url }}" class="btn btn-primary">
-          View
+          {% trans 'View' %}
         </a>
       </div>
     </div>
   </div>
   {% empty %}
-  <p class="lead">No notes yet. <a href="{% url 'notes:note-create' %}" class="btn btn-primary">Add</a>
+  <p class="lead">{% trans 'No notes yet.' %}
+    <a href="{% url 'notes:note-create' %}" class="btn btn-primary">
+      {% trans 'Add' %}
+    </a>
   </p>
   {% endfor %}
 </div>

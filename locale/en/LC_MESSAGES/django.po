@@ -8,19 +8,130 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-20 16:00+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2023-08-20 17:07+0300\n"
+"PO-Revision-Date: 2023-08-20 16:25+0300\n"
+"Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: .\config\settings.py:141
-msgid "English"
-msgstr "Kiingereza"
+"X-Translated-Using: django-rosetta 0.9.9\n"
 
 #: .\config\settings.py:142
+msgid "English"
+msgstr ""
+
+#: .\config\settings.py:143
 msgid "Swahili"
-msgstr "English"
+msgstr ""
+
+#: .\pim\main\templates\main\home.html:6
+msgid "Pricing"
+msgstr ""
+
+#: .\pim\main\templates\main\home.html:23
+msgid "Select"
+msgstr ""
+
+#: .\pim\main\templates\main\home.html:31
+msgid "No plans yet"
+msgstr ""
+
+#: .\pim\notes\templates\notes\index.html:5 .\templates\base.html:40
+msgid "Notes"
+msgstr ""
+
+#: .\pim\notes\templates\notes\index.html:15
+msgid "View"
+msgstr ""
+
+#: .\pim\notes\templates\notes\index.html:21
+msgid "No notes yet."
+msgstr ""
+
+#: .\pim\notes\templates\notes\index.html:23
+#: .\pim\todos\templates\todos\partials\form.html:19
+msgid "Add"
+msgstr ""
+
+#: .\pim\notes\templates\notes\note_confirm_delete.html:7
+msgid " Do you want to delete?"
+msgstr ""
+
+#: .\pim\notes\templates\notes\note_confirm_delete.html:8
+msgid "Yes"
+msgstr ""
+
+#: .\pim\notes\templates\notes\note_confirm_delete.html:10
+msgid "No"
+msgstr ""
+
+#: .\pim\notes\templates\notes\note_detail.html:10
+msgid "Edit"
+msgstr ""
+
+#: .\pim\notes\templates\notes\note_detail.html:13
+msgid "Delete"
+msgstr ""
+
+#: .\pim\notes\templates\notes\note_form.html:15
+msgid "Save"
+msgstr ""
+
+#: .\pim\todos\models.py:19
+msgid "text"
+msgstr ""
+
+#: .\pim\todos\models.py:20
+msgid "is_completed"
+msgstr ""
+
+#: .\pim\todos\models.py:21
+msgid "created_at"
+msgstr ""
+
+#: .\pim\todos\models.py:22
+msgid "updated_at"
+msgstr ""
+
+#: .\pim\todos\models.py:43
+msgid "order"
+msgstr ""
+
+#: .\pim\todos\templates\todos\index.html:6 .\templates\base.html:33
+msgid "Todos"
+msgstr ""
+
+#: .\pim\todos\templates\todos\partials\form.html:9
+msgid "What needs to be done"
+msgstr ""
+
+#: .\pim\todos\templates\todos\partials\form.html:15
+msgid "Update"
+msgstr ""
+
+#: .\pim\todos\templates\todos\partials\form.html:23
+msgid "Loading"
+msgstr ""
+
+#: .\templates\base.html:12
+msgid "Personal Information Manager"
+msgstr ""
+
+#: .\templates\base.html:22
+msgid "Elegant PIM"
+msgstr ""
+
+#: .\templates\base.html:48
+msgid "Log In"
+msgstr ""
+
+#: .\templates\base.html:55
+msgid "Sign Up"
+msgstr ""
+
+#: .\templates\base.html:73
+msgid "Made with Love by"
+msgstr ""

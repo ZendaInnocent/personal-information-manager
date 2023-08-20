@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
@@ -15,10 +16,10 @@ class Todo(models.Model):
         on_delete=models.CASCADE,
         related_name="todos",
     )
-    text = models.CharField(max_length=100)
-    is_completed = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    text = models.CharField(_('text'), max_length=100)
+    is_completed = models.BooleanField(_('is_completed'), default=False)
+    created_at = models.DateTimeField(_('created_at'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('updated_at'), auto_now=True)
 
     objects = TodoManager()
 
@@ -39,7 +40,7 @@ class UserTodoManager(models.Manager):
 class UserTodo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     todo = models.ForeignKey(Todo, on_delete=models.CASCADE)
-    order = models.PositiveSmallIntegerField()
+    order = models.PositiveSmallIntegerField(_('order'))
 
     objects = UserTodoManager()
 

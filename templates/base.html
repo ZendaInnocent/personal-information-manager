@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
     {% block title %}
-    Personal Information Manager
+    {% trans 'Personal Information Manager' %}
     {% endblock title %}
   </title>
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -17,7 +19,7 @@
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="min-vh-100 d-flex flex-column">
   <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Elegant PIM</a>
+      <a class="navbar-brand" href="/">{% trans 'Elegant PIM' %}</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -28,14 +30,14 @@
           <li class="nav-item">
             <a href="{% url 'todos:todos-index' %}"
               class="nav-link {% if request.path == '/todos/' %} active {% endif %}">
-              Todos
+              {% trans 'Todos' %}
             </a>
           </li>
 
           <li class="nav-item">
             <a href="{% url 'notes:notes-index' %}"
               class="nav-link {% if request.path == '/notes/' %} active {% endif %}">
-              Notes
+              {% trans 'Notes' %}
             </a>
           </li>
 
@@ -43,14 +45,14 @@
           <li class="nav-item">
             <a href="{% url 'account_login' %}"
               class="nav-link {% if request.path == '/accounts/login/' %} active {% endif %} ">
-              Log In
+              {% trans 'Log In' %}
             </a>
           </li>
 
           <li class="nav-item">
             <a href="{% url 'account_signup' %}"
               class="nav-link {% if request.path == '/accounts/signup/' %} active {% endif %}">
-              Sign Up
+              {% trans 'Sign Up' %}
             </a>
           </li>
 
@@ -68,7 +70,7 @@
 
   <footer class="container-fluid bg-light mt-auto">
     <div class="container py-3">
-      Made with Love by Innocent. &copy; 2023
+      {% trans 'Made with Love by' %} Innocent. &copy; 2023
     </div>
   </footer>
 
