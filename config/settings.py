@@ -36,6 +36,7 @@ ALLOWED_HOSTS = config(
 # Application definition
 
 INSTALLED_APPS = [
+    'rosetta',
     'pim.accounts',
     'pim.billing',
     'pim.main',
@@ -143,7 +144,7 @@ LANGUAGES = (
 )
 
 LOCALE_PATHS = [
-    BASE_DIR / '/locale/',
+    BASE_DIR / 'locale',
 ]
 
 # Static files (CSS, JavaScript, Images)

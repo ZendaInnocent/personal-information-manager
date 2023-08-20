@@ -13,6 +13,7 @@ django-tinymce = "*"
 pycountry = "*"
 pre-commit = "*"
 django-allauth = "*"
+django-rosetta = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

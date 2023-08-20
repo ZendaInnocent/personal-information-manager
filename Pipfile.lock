@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "337133e09538f4464480c790eee055ca593a6634c66d718c7ff36168d99aac5d"
+            "sha256": "056b9ec33ddfa1fa06211137f1565464e06e15d9fedc007c4715a8192c25a1d6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -279,6 +279,14 @@
             "index": "pypi",
             "version": "==1.16.0"
         },
+        "django-rosetta": {
+            "hashes": [
+                "sha256:269d9ce7e9972002ac216e7bca33b4d9f578bd38b6043d98e28c9b69c04c1f59",
+                "sha256:776ac03f43974ea780ca25e7d805862b06c8ede4698f999c771a5ed78da4b87f"
+            ],
+            "index": "pypi",
+            "version": "==0.9.9"
+        },
         "django-tinymce": {
             "hashes": [
                 "sha256:6f4f6227c2c608052081a436a1e3054c441caae24c9e0c8c3010536e24749e29",
@@ -334,6 +342,13 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==3.10.0"
+        },
+        "polib": {
+            "hashes": [
+                "sha256:1c77ee1b81feb31df9bca258cbc58db1bbb32d10214b173882452c73af06d62d",
+                "sha256:f3ef94aefed6e183e342a8a269ae1fc4742ba193186ad76f175938621dbfc26b"
+            ],
+            "version": "==1.2.0"
         },
         "pre-commit": {
             "hashes": [
@@ -439,11 +454,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:d59c97e7b774979a5ccb96388efc9eb65518004537e85d52e81eaee89ab6dd91",
-                "sha256:e13e1b0bc760e9b0127eda042845999b2f913e12437046e663b833aa96d89715"
+                "sha256:3d4dfa6d95f1b101d695a6160a7626e15583af71a5f52176efa5d39a054d475d",
+                "sha256:3d8083eed2d13afc9426f227b24fd1659489ec107c0e86cec2ffdde5c92e790b"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==68.1.0"
+            "version": "==68.1.2"
         },
         "sqlparse": {
             "hashes": [
