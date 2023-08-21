@@ -4,7 +4,7 @@ An application to help organize personal data and information.
 
 ## Features
 
-- [ ] **User Registration and Authentication**
+- [x] **User Registration and Authentication**
 
     Register, login and logout securily.
 
@@ -105,6 +105,8 @@ An application to help organize personal data and information.
     ```
 
 8. Access your app in your browser at `http://localhost:8000`
+
+For Translations: access the interface at `http://localhost:8000/rosetta`
 
 ## Contributing
 
