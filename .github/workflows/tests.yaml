@@ -1,7 +1,7 @@
 name: Tests Runner
 on:
-  - push
-  - pull_request
+  # - push
+  # - pull_request
 
 jobs:
   test:
@@ -16,6 +16,8 @@ jobs:
 
       - name: Set Up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
+        with:
+          cache: 'pipenv'
 
       - name: Install Dependencies
         run: |
