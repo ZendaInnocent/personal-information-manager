@@ -36,6 +36,7 @@ ALLOWED_HOSTS = config(
 # Application definition
 
 INSTALLED_APPS = [
+    'pim.appointments',
     'pim.contacts',
     'rosetta',
     'pim.accounts',

@@ -48,6 +48,14 @@
               {% trans 'Notes' %}
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="{% url 'appointments:index' %}"
+              class="nav-link {% if request.path == 'appointments' %} active {% endif %}">
+              {% trans 'Appointments' %}
+            </a>
+          </li>
+
           {% endif %}
         </ul>
         <ul class="navbar-nav ms-auto">
