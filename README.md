@@ -8,7 +8,7 @@ An application to help organize personal data and information.
 
     Register, login and logout securily.
 
-- [ ] **Task and To-Do Lists**
+- [x] **Task and To-Do Lists**
 
     Create and manage to-do lists and tasks with due dates and priority level.
 

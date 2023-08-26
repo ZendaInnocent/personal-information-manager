@@ -36,6 +36,13 @@
           </li>
 
           <li class="nav-item">
+            <a href="{% url 'contacts:index' %}"
+              class="nav-link {% if request.path == '/contacts/' %} active {% endif %}">
+              {% trans 'Contacts' %}
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a href="{% url 'notes:notes-index' %}"
               class="nav-link {% if request.path == '/notes/' %} active {% endif %}">
               {% trans 'Notes' %}
@@ -92,7 +99,7 @@
     </div>
   </nav>
 
-  <main class="container my-4 col-md-8">
+  <main class="container my-4">
     {% block content %}
 
     {% endblock content %}

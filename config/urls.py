@@ -13,6 +13,7 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path('', include('pim.main.urls')),
+    path('contacts/', include('pim.contacts.urls')),
     path('admin/', admin.site.urls),
     path('billing/', include('pim.billing.urls')),
     path('todos/', include('pim.todos.urls')),

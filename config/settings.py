@@ -36,6 +36,7 @@ ALLOWED_HOSTS = config(
 # Application definition
 
 INSTALLED_APPS = [
+    'pim.contacts',
     'rosetta',
     'pim.accounts',
     'pim.billing',
@@ -167,7 +168,7 @@ MESSAGE_TAGS = {
     messages.ERROR: "text-white bg-danger",
 }
 
-CRISPY_ALLOWED_TEMPLETE_PACKS = 'bootstrap5'
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
