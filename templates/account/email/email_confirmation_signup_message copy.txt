@@ -1,0 +1,8 @@
+Welcome to Elegant PIM!
+
+To begin your journey, you need to verify your email address.
+
+Go to {{ activate_url }}
+
+Regards,
+Matt from Elegant PIM
