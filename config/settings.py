@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -156,6 +157,10 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+MEDIA_ROOT = BASE_DIR / 'media'
+
+MEDIA_URL = '/media/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -201,3 +206,10 @@ if not DEBUG:
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
     EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+
+
+PHONENUMBER_DB_FORMAT = 'INTERNATIONAL'
+
+PHONENUMBER_DEFAULT_REGION = 'TZ'
+
+PHONENUMBER_DEFAULT_FORMAT = 'INTERNATIONAL'
