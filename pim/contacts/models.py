@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.text import slugify
@@ -5,6 +6,11 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Contact(models.Model):
+    user = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='contacts',
+    )
     slug = models.SlugField(max_length=100)
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=100, blank=True, null=True)

@@ -1,27 +1,28 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, ListView
 
+from .forms import ContactForm
 from .models import Contact
 
 
-def index(request):
-    template_name = 'contacts/index.html'
-    context = {'contacts': Contact.objects.all()}
-    return render(request, template_name, context)
+class ContactListView(LoginRequiredMixin, ListView):
+    context_object_name = 'contacts'
+
+    def get_queryset(self):
+        return Contact.objects.filter(user=self.request.user)
+
+
+index = ContactListView.as_view()
 
 
 class ContactCreateView(CreateView):
     model = Contact
-    fields = [
-        'name',
-        'phone_number',
-        'title',
-        'avatar',
-        'is_favorite',
-        'email',
-    ]
+    form_class = ContactForm
     success_url = reverse_lazy('contacts:index')
+
+    def get_initial(self):
+        return {'user': self.request.user}
 
 
 contact_add = ContactCreateView.as_view()
