@@ -26,10 +26,10 @@ class Note(models.Model):
             '-modified_at',
         ]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse('notes:note-detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
