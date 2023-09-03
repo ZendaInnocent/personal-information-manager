@@ -28,7 +28,7 @@ class Todo(models.Model):
             "-created_at",
         ]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.text
 
 
