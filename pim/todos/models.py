@@ -17,8 +17,11 @@ class Todo(models.Model):
         related_name="todos",
     )
     text = models.CharField(_('text'), max_length=100)
-    is_completed = models.BooleanField(_('is_completed'), default=False)
-    created_at = models.DateTimeField(_('created_at'), auto_now_add=True)
+    is_completed = models.BooleanField(_('is completed'), default=False)
+    created_at = models.DateTimeField(
+        _('created_at'),
+        auto_now_add=True,
+    )
     updated_at = models.DateTimeField(_('updated_at'), auto_now=True)
 
     objects = TodoManager()

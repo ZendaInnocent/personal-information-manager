@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<div class="position-relative min-vh-100">
+<div class="d-flex justify-content-between align-items-center mb-4">
   <h1>{% trans 'Todos' %}</h1>
 
-  {% include 'todos/partials/form.html' %}
-
-  <div class="border mb-3"></div>
-
-  {% include 'todos/partials/list.html' %}
+  <a type="button" class="btn btn-primary" href="{% url 'todos:create-todo' %}">
+    {% trans 'Add' %}
+  </a>
 </div>
+
+{% include 'todos/partials/list.html' %}
+
 {% endblock content %}
