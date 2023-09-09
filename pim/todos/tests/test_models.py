@@ -17,12 +17,9 @@ def test_todo_string_method(testuser) -> None:
 
 
 def test_todo_manager_prefetched_user(testuser) -> None:
-    _todos = [Todo.objects.create(user=testuser, text='some text') for i in range(5)]
-    # todo1: Todo = Todo.objects.create(user=testuser, text='some text')
-    # todo2: Todo = Todo.objects.create(user=testuser, text='some text')
-    # todo3: Todo = Todo.objects.create(user=testuser, text='some text')
-    # todo4: Todo = Todo.objects.create(user=testuser, text='some text')
-    # todo5: Todo = Todo.objects.create(user=testuser, text='some text')
+    _todos: list[Todo] = [
+        Todo.objects.create(user=testuser, text='some text') for i in range(5)
+    ]
 
     todos: list[Todo] = (
         Todo.objects.prefetched_user().filter(user=testuser).order_by('created_at')
