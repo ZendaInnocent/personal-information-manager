@@ -1,30 +1,29 @@
 from django.db.models import Max
 
-from .models import UserTodo
-
 
 def get_order_value(user):
-    existing_user_todos = UserTodo.objects.filter(user=user)
+    user_todos = user.todos.all()
 
-    if not existing_user_todos.exists():
+    if not user_todos.exists():
         return 1
     else:
-        current_max = existing_user_todos.aggregate(max_order=Max('order'))['max_order']
+        current_max = user_todos.aggregate(max_order=Max('order'))['max_order']
         return current_max + 1
 
 
 def reorder(user):
-    existing_user_todos = UserTodo.objects.prefetched_user_todo().filter(user=user)
-    if not existing_user_todos.exists():
+    user_todos = user.todos.all()
+
+    if not user_todos.exists():
         return
 
-    number_of_user_todos = existing_user_todos.count()
-    new_ordering = range(1, number_of_user_todos + 1)
+    number_of_todos = user_todos.count()
+    new_ordering = range(1, number_of_todos + 1)
 
-    new_user_todos = []
+    new_todos = []
 
-    for order, user_todo in zip(new_ordering, existing_user_todos):
-        user_todo.order = order
-        new_user_todos.append(user_todo)
+    for order, todo in zip(new_ordering, user_todos):
+        todo.order = order
+        new_todos.append(todo)
 
-    UserTodo.objects.bulk_update(new_user_todos, fields=['order'])
+    user.todos.bulk_update(new_todos, fields=['order'])
