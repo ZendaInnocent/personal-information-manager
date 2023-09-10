@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
+from django.http import HttpRequest, QueryDict
 from django.template.response import TemplateResponse
 
 from .models import Todo
@@ -82,26 +82,13 @@ def sort_todos(request: HttpRequest) -> TemplateResponse:
     )
 
 
-# @login_required
-# def update_todo(request, id) -> HttpResponse:
-#     todo = Todo.objects.prefetched_user().get(id=id)
+@login_required
+def update_todo(request, id) -> TemplateResponse:
+    todo: Todo = request.user.todos.get(id=id)
 
-#     if request.method == 'PUT':
-#         data = QueryDict(request.body)
-#         if todo.user == request.user:
-#             todo.text = data.get('todo')
-#             todo.save()
-#             messages.success(request, 'Todo updated successful.')
-#             return HttpResponse(status=204)
-#         else:
-#             messages.error(request, 'You are not have access to update this todo.')
-
-#         user_todo = (
-#             UserTodo.objects.prefetched_user_todo()
-#             .filter(user=request.user)
-#             .get(todo=todo)
-#         )
-#         return render(request, 'todos/partials/todo.html', {'user_todo': user_todo})
-
-#     context = {'todo': todo}
-#     return render(request, 'todos/partials/form.html', context)
+    if request.method == 'PUT':
+        data = QueryDict(request.body)
+        todo.text = data.get('text')
+        todo.save()
+        messages.success(request, 'Todo updated successful.')
+        return TemplateResponse(request, 'todos/partials/todo.html', {'todo': todo})

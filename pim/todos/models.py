@@ -24,7 +24,7 @@ class Todo(models.Model):
 
     class Meta:
         ordering: list[str] = [
-            'order',
+            '-order',
         ]
 
     def __str__(self) -> str:

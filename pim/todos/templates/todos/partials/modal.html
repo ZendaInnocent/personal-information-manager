@@ -1,0 +1,49 @@
+{% load i18n %}
+
+{% if todo %}
+<div class="modal fade" id="modal-todo-{{todo.id}}" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form method="PUT" class="my-3" hx-put="{% url 'todos:update-todo' todo.id %}" hx-target="#todo-{{ todo.id }}"
+        hx-swap="outerHTML">
+        {% else %}
+        <div class="modal fade" id="addTodo" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <form method="POST" class="my-3" hx-post="{% url 'todos:todos-index' %}" hx-target="#todos-list"
+                hx-swap="outerHTML">
+                {% endif %}
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalTitleId">
+                    {% blocktrans %}
+                    {{ title }}
+                    {% endblocktrans %}
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                  <div class="form-floating mb-3">
+                    <input {% if todo %} value="{{ todo.text }}" {% endif %} type="text" name="text"
+                      class="form-control" id="todoText" placeholder="What needs to be done" name="todo" autofocus
+                      required>
+                    <label for="todoText">
+                      {% trans 'What needs to be done' %}
+                    </label>
+                  </div>
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    {% trans 'Close' %}
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    {% trans 'Save' %}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>

@@ -7,45 +7,12 @@
   <h1>{% trans 'Todos' %}</h1>
 
   <!-- Modal trigger button -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalId">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTodo">
     {% trans 'Add' %}
   </button>
 
   <!-- Modal Body -->
-  <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <form method="POST" class="my-3" hx-post="{% url 'todos:todos-index' %}" hx-target="#todos-list"
-          hx-swap="outerHTML">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalTitleId">
-              {% trans 'Add Todo' %}
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-
-            <div class="form-floating mb-3">
-              <input {% if todo %} value="{{ todo.text }}" {% endif %} type="text" name="text" class="form-control"
-                id="todoText" placeholder="What needs to be done" name="todo" required>
-              <label for="todoText">
-                {% trans 'What needs to be done' %}
-              </label>
-            </div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              {% trans 'Close' %}
-            </button>
-            <button type="submit" class="btn btn-primary">
-              {% trans 'Save' %}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+  {% include 'todos/partials/modal.html' with title='Add Todo' %}
 
 </div>
 

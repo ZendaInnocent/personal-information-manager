@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <li id="todo-{{ todo.id }}" class="list-group-item d-flex justify-content-between align-items-center"
   style="cursor: pointer;" hx-swap="outerHTML">
   <input type="hidden" name="todo" value="{{ todo.id }}">
@@ -5,7 +7,8 @@
   {% include 'todos/partials/checkbox.html' with todo=todo %}
 
   <div>
-    <span class="btn" hx-get="" hx-target="form" hx-swap="outerHTML">
+    <span class="btn" hx-target="form" hx-swap="outerHTML" data-bs-toggle="modal"
+      data-bs-target="#modal-todo-{{todo.id}}">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
         viewBox="0 0 16 16">
         <path
@@ -25,4 +28,5 @@
       </svg>
     </span>
   </div>
+  {% include 'todos/partials/modal.html' with todo=todo title='Update Todo' %}
 </li>
