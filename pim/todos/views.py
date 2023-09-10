@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
@@ -8,6 +9,20 @@ from .models import Todo
 
 @login_required
 def index(request: HttpRequest) -> TemplateResponse:
+    if request.method == 'POST':
+        text: str | None = request.POST.get('text', None)
+        if text is None:
+            return
+        Todo.objects.create(user=request.user, text=text)
+        messages.success(request, 'Task added succesful.')
+        return TemplateResponse(
+            request,
+            'todos/partials/list.html',
+            {
+                'todos': request.user.todos.all(),
+            },
+        )
+
     return TemplateResponse(
         request,
         'todos/index.html',
@@ -20,6 +35,7 @@ def index(request: HttpRequest) -> TemplateResponse:
 @login_required
 def delete_todo(request: HttpRequest, id: int) -> TemplateResponse:
     request.user.todos.get(id=id).delete()
+    messages.success(request, 'Task deleted successful.')
     return TemplateResponse(
         request,
         'todos/partials/list.html',
@@ -33,8 +49,7 @@ def delete_todo(request: HttpRequest, id: int) -> TemplateResponse:
 def toggle_todo(request: HttpRequest, id: int) -> TemplateResponse | None:
     if request.method == 'POST':
         todo: Todo = request.user.todos.get(id=id)
-        todo.is_completed = not todo.is_completed
-        todo.save()
+        todo.toggle_completed()
         return TemplateResponse(
             request,
             'todos/partials/checkbox.html',

@@ -23,7 +23,7 @@ class Todo(models.Model):
     updated_at = models.DateTimeField(_('updated_at'), auto_now=True)
 
     class Meta:
-        ordering = [
+        ordering: list[str] = [
             'order',
         ]
 
@@ -34,3 +34,7 @@ class Todo(models.Model):
         if self.order is None:
             self.order = get_order_value(self.user)
         return super().save(*args, **kwargs)
+
+    def toggle_completed(self) -> None:
+        self.is_completed: bool = not self.is_completed
+        self.save()

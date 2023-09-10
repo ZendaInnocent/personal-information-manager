@@ -21,8 +21,6 @@ def test_todo_manager_prefetched_user(testuser) -> None:
         Todo.objects.create(user=testuser, text='some text') for i in range(5)
     ]
 
-    todos: list[Todo] = (
-        Todo.objects.prefetched_user().filter(user=testuser).order_by('created_at')
-    )
+    todos: list[Todo] = testuser.todos.all()
 
     assert list(todos) == _todos
