@@ -29,3 +29,66 @@ htmx.onLoad(function (content) {
         });
     }
 })
+
+// Delete Todo
+const deleteBtns = document.querySelectorAll('.delete-btn');
+
+deleteBtns.forEach(deleteTodo)
+
+function deleteTodo(deleteBtn) {
+    deleteBtn.addEventListener('click', () => {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success me-2',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure you want to delete?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const url = deleteBtn.getAttribute('data-url')
+
+                htmx.ajax('DELETE', url, { target: '#todos-list', swap: 'outerHTML' }).then(() => {
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'Your task has been deleted.',
+                        'success'
+                    )
+
+                })
+
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+
+            }
+        })
+    })
+}
+
+
+// const Toast = Swal.mixin({
+//     toast: true,
+//     position: 'top-end',
+//     showConfirmButton: false,
+//     timer: 3000,
+//     timerProgressBar: true,
+//     didOpen: (toast) => {
+//         toast.addEventListener('mouseenter', Swal.stopTimer)
+//         toast.addEventListener('mouseleave', Swal.resumeTimer)
+//     }
+// })
+
+// Toast.fire({
+//     icon: 'success',
+//     title: 'Signed in successfully'
+// })

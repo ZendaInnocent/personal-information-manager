@@ -13,7 +13,7 @@ def index(request: HttpRequest) -> TemplateResponse:
         text: str | None = request.POST.get('text', None)
         if text is None:
             return
-        Todo.objects.create(user=request.user, text=text)
+        request.user.todos.create(text=text)
         messages.success(request, 'Task added succesful.')
         return TemplateResponse(
             request,
