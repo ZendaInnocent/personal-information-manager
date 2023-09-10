@@ -35,7 +35,6 @@ def index(request: HttpRequest) -> TemplateResponse:
 @login_required
 def delete_todo(request: HttpRequest, id: int) -> TemplateResponse:
     request.user.todos.get(id=id).delete()
-    messages.success(request, 'Task deleted successful.')
     return TemplateResponse(
         request,
         'todos/partials/list.html',
@@ -67,7 +66,7 @@ def sort_todos(request: HttpRequest) -> TemplateResponse:
     new_ordered_todos = []
 
     for index, todo_pk in enumerate(current_todos_order, start=1):
-        todo: Todo = user.todos.get(pk=todo_pk)
+        todo: Todo = user.todos.prefetch_related('todo').get(pk=todo_pk)
         todo.order = index
         new_ordered_todos.append(todo)
 
