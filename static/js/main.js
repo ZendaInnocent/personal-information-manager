@@ -11,10 +11,11 @@ htmx.onLoad(() => {
         if (!toast) {
             const toast = new bootstrap.Toast(element)
             toast.show()
-        } else if (!toast.isShown()) {
-            toast.dispose()
-            element.remove()
         }
+        // } else if (!toast.isShown()) {
+        //     toast.dispose()
+        //     element.remove()
+        // }
     })
 })
 
