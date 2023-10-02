@@ -1,4 +1,4 @@
-<div id="#checkbox-{{ todo.id }}" hx-post="{% url 'todos:toggle-todo' todo.id %}">
+<div id="#checkbox-{{ todo.id }}" hx-post="{% url 'todos:todo-toggle' todo.id %}">
   <input class="me-2 form-check-input" type="checkbox" {% if todo.is_completed %} checked {% endif %} hx-target="this"
     name="status" hx-swap="#checkbox-{{ todo.id }}">
   <span {% if todo.is_completed %} style="text-decoration: line-through;" {% endif %}>

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>{% trans 'Todos' %}</h1>
+</div>
+
+{% include 'todos/partials/list.html' with todos=todos %}
+{% endblock content %}

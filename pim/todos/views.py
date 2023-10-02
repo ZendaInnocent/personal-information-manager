@@ -1,39 +1,48 @@
-from django.contrib import messages
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, QueryDict
+from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.urls import reverse_lazy
 
+from .forms import TodoForm
 from .models import Todo
 
 
 @login_required
-def index(request: HttpRequest) -> TemplateResponse:
-    if request.method == 'POST':
-        text: str | None = request.POST.get('text', None)
-        if text is None:
-            return
-        request.user.todos.create(text=text)
-        messages.success(request, 'Task added succesful.')
-        return TemplateResponse(
-            request,
-            'todos/partials/list.html',
-            {
-                'todos': request.user.todos.all(),
-            },
-        )
-
-    return TemplateResponse(
-        request,
-        'todos/index.html',
-        {
-            'todos': request.user.todos.all(),
-        },
-    )
+def todo_list(request: HttpRequest) -> TemplateResponse:
+    todos: [Todo] = request.user.todos.all()
+    return TemplateResponse(request, 'todos/todo_list.html', {'todos': todos})
 
 
 @login_required
-def delete_todo(request: HttpRequest, id: int) -> TemplateResponse:
+def todo_add(request: HttpRequest) -> TemplateResponse:
+    form: TodoForm = TodoForm(initial={'user': request.user})
+
+    if request.method == 'POST':
+        form = TodoForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('todos:todo-list'))
+        else:
+            form = TodoForm(request.POST)
+    return TemplateResponse(request, 'todos/todo_form.html', {'form': form})
+
+
+@login_required
+def todo_update(request, id) -> TemplateResponse:
+    todo: Todo = request.user.todos.get(id=id)
+
+    if request.method == 'PUT':
+        data = QueryDict(request.body)
+        todo.text = data.get('text')
+        todo.save()
+        return TemplateResponse(request, 'todos/partials/todo.html', {'todo': todo})
+
+
+@login_required
+def todo_delete(request: HttpRequest, id: int) -> TemplateResponse:
     request.user.todos.get(id=id).delete()
     return TemplateResponse(
         request,
@@ -45,7 +54,7 @@ def delete_todo(request: HttpRequest, id: int) -> TemplateResponse:
 
 
 @login_required
-def toggle_todo(request: HttpRequest, id: int) -> TemplateResponse | None:
+def todo_toggle(request: HttpRequest, id: int) -> TemplateResponse | None:
     if request.method == 'POST':
         todo: Todo = request.user.todos.get(id=id)
         todo.toggle_completed()
@@ -79,15 +88,3 @@ def sort_todos(request: HttpRequest) -> TemplateResponse:
             'todos': user.todos.all(),
         },
     )
-
-
-@login_required
-def update_todo(request, id) -> TemplateResponse:
-    todo: Todo = request.user.todos.get(id=id)
-
-    if request.method == 'PUT':
-        data = QueryDict(request.body)
-        todo.text = data.get('text')
-        todo.save()
-        messages.success(request, 'Todo updated successful.')
-        return TemplateResponse(request, 'todos/partials/todo.html', {'todo': todo})

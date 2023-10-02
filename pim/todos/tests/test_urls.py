@@ -3,28 +3,34 @@ from django.urls import resolve, reverse
 from pim.todos import views
 
 
-def test_todos_homepage_url_resolves() -> None:
-    url = reverse('todos:todos-index')
+def test_todo_list_url_resolves() -> None:
+    url = reverse('todos:todo-list')
 
-    assert resolve(url).func == views.index
-
-
-def test_delete_todo_url_resolves() -> None:
-    url = reverse('todos:delete-todo', kwargs={'id': 1})
-
-    assert resolve(url).func == views.delete_todo
+    assert resolve(url).func == views.todo_list
 
 
-def test_toggle_todo_url_resolves() -> None:
-    url = reverse('todos:toggle-todo', kwargs={'id': 1})
+def test_todo_add_url_resolves() -> None:
+    url = reverse('todos:todo-add')
 
-    assert resolve(url).func == views.toggle_todo
+    assert resolve(url).func == views.todo_add
 
 
-def test_update_todo_url_resolves() -> None:
-    url = reverse('todos:update-todo', kwargs={'id': 1})
+def test_todo_update_url_resolves() -> None:
+    url = reverse('todos:todo-update', kwargs={'id': 1})
 
-    assert resolve(url).func == views.update_todo
+    assert resolve(url).func == views.todo_update
+
+
+def test_todo_delete_url_resolves() -> None:
+    url = reverse('todos:todo-delete', kwargs={'id': 1})
+
+    assert resolve(url).func == views.todo_delete
+
+
+def test_todo_toggle_url_resolves() -> None:
+    url = reverse('todos:todo-toggle', kwargs={'id': 1})
+
+    assert resolve(url).func == views.todo_toggle
 
 
 def test_sort_todos_url_resolves() -> None:

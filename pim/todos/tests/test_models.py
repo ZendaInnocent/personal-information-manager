@@ -10,7 +10,7 @@ def testuser() -> AbstractBaseUser:
     return get_user_model().objects.create(username='username')
 
 
-def test_todo_string_method(testuser) -> None:
+def test_todo_string_representation(testuser) -> None:
     todo: Todo = Todo.objects.create(user=testuser, text='some text')
 
     assert str(todo) == todo.text
@@ -24,3 +24,12 @@ def test_todo_manager_prefetched_user(testuser) -> None:
     todos: list[Todo] = testuser.todos.all()
 
     assert list(todos) == _todos
+
+
+def test_todo_toggle_works(testuser) -> None:
+    todo: Todo = Todo.objects.create(user=testuser, text='some', is_completed=False)
+
+    assert not todo.is_completed
+
+    todo.toggle_completed()
+    assert todo.is_completed
