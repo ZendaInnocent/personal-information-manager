@@ -9,8 +9,10 @@ class TodoForm(forms.ModelForm):
         fields = [
             'user',
             'text',
+            'due_date',
             'is_completed',
         ]
         widgets = {
             'user': forms.HiddenInput(),
+            'due_date': forms.DateTimeInput(attrs={'type': 'date'}),
         }

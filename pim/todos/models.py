@@ -16,6 +16,8 @@ class Todo(models.Model):
     text = models.CharField(_('text'), max_length=100)
     is_completed = models.BooleanField(_('is completed'), default=False)
     order = models.PositiveIntegerField()
+    due_date = models.DateTimeField(blank=True, null=True)
+
     created_at = models.DateTimeField(
         _('created_at'),
         auto_now_add=True,
