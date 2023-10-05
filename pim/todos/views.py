@@ -1,3 +1,4 @@
+import sweetify
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponseRedirect
@@ -24,6 +25,7 @@ def todo_add(request: HttpRequest) -> TemplateResponse:
 
         if form.is_valid():
             form.save()
+            sweetify.success(request, 'Task added successful.')
             return redirect(reverse_lazy('todos:todo-list'))
         else:
             form = TodoForm(request.POST)
@@ -40,6 +42,7 @@ def todo_update(request, id) -> TemplateResponse:
 
         if form.is_valid():
             form.save()
+            sweetify.success(request, 'Task updated successful.')
             return redirect(reverse_lazy('todos:todo-list'))
 
     return TemplateResponse(request, 'todos/todo_form.html', {'form': form})
@@ -48,6 +51,7 @@ def todo_update(request, id) -> TemplateResponse:
 @login_required
 def todo_delete(request: HttpRequest, id: int) -> HttpResponseRedirect:
     request.user.todos.get(id=id).delete()
+    sweetify.success(request, 'Task deleted successful.')
     return HttpResponseRedirect(reverse_lazy('todos:todo-list'))
 
 

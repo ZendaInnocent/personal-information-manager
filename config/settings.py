@@ -36,6 +36,7 @@ ALLOWED_HOSTS = config(
 # Application definition
 
 INSTALLED_APPS = [
+    'sweetify',
     'pim.appointments',
     'pim.contacts',
     'rosetta',
@@ -74,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -173,6 +175,8 @@ MESSAGE_TAGS = {
     messages.WARNING: "text-dark bg-warning",
     messages.ERROR: "text-white bg-danger",
 }
+
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
