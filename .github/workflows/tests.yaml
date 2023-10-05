@@ -1,14 +1,14 @@
 name: Tests Runner
 on:
-  # - push
-  # - pull_request
+  - push
+  - pull_request
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.10', '3.11']
+        python-version: ['3.11']
 
     steps:
       - name: Get the code
