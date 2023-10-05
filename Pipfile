@@ -16,7 +16,6 @@ django-allauth = "*"
 django-rosetta = "*"
 pillow = "*"
 django-phonenumber-field = {version = "*", extras = ["phonenumbers"]}
-sweetify = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

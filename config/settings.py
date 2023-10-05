@@ -36,7 +36,6 @@ ALLOWED_HOSTS = config(
 # Application definition
 
 INSTALLED_APPS = [
-    'sweetify',
     'pim.appointments',
     'pim.contacts',
     'rosetta',
@@ -175,8 +174,6 @@ MESSAGE_TAGS = {
     messages.WARNING: "text-dark bg-warning",
     messages.ERROR: "text-white bg-danger",
 }
-
-SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 

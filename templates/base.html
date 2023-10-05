@@ -107,6 +107,13 @@
     </div>
   </nav>
 
+  {% for message in messages %}
+  <div class="container mt-3 alert alert-{{message.tags}} text-white alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+
   <main class="container my-4">
     {% block content %}
 
@@ -127,9 +134,6 @@
   {% if debug %}
   <script src="{% static 'js/django-debug-toolbar.js' %}"></script>
   {% endif %}
-
-  {% load sweetify %}
-  {% sweetify %}
 </body>
 
 </html>
