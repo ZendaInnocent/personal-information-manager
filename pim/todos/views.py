@@ -1,6 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, QueryDict
+from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
@@ -33,24 +33,22 @@ def todo_add(request: HttpRequest) -> TemplateResponse:
 @login_required
 def todo_update(request, id) -> TemplateResponse:
     todo: Todo = request.user.todos.get(id=id)
+    form = TodoForm(instance=todo)
 
-    if request.method == 'PUT':
-        data = QueryDict(request.body)
-        todo.text = data.get('text')
-        todo.save()
-        return TemplateResponse(request, 'todos/partials/todo.html', {'todo': todo})
+    if request.method == 'POST':
+        form = TodoForm(request.POST, instance=todo)
+
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('todos:todo-list'))
+
+    return TemplateResponse(request, 'todos/todo_form.html', {'form': form})
 
 
 @login_required
-def todo_delete(request: HttpRequest, id: int) -> TemplateResponse:
+def todo_delete(request: HttpRequest, id: int) -> HttpResponseRedirect:
     request.user.todos.get(id=id).delete()
-    return TemplateResponse(
-        request,
-        'todos/partials/list.html',
-        {
-            'todos': request.user.todos.all(),
-        },
-    )
+    return HttpResponseRedirect(reverse_lazy('todos:todo-list'))
 
 
 @login_required
@@ -75,7 +73,11 @@ def sort_todos(request: HttpRequest) -> TemplateResponse:
     new_ordered_todos = []
 
     for index, todo_pk in enumerate(current_todos_order, start=1):
-        todo: Todo = user.todos.prefetch_related('todo').get(pk=todo_pk)
+        todo: Todo = (
+            Todo.objects.select_related('user')
+            .filter(user=request.user)
+            .get(pk=todo_pk)
+        )
         todo.order = index
         new_ordered_todos.append(todo)
 
