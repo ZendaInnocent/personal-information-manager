@@ -29,7 +29,9 @@ def todo_add(request: HttpRequest) -> TemplateResponse:
             return redirect(reverse_lazy('todos:todo-list'))
         else:
             form = TodoForm(request.POST)
-    return TemplateResponse(request, 'todos/todo_form.html', {'form': form})
+    return TemplateResponse(
+        request, 'todos/todo_form.html', {'title': 'Add', 'form': form}
+    )
 
 
 @login_required
@@ -45,7 +47,9 @@ def todo_update(request, id) -> TemplateResponse:
             messages.success(request, 'Task updated successful.')
             return redirect(reverse_lazy('todos:todo-list'))
 
-    return TemplateResponse(request, 'todos/todo_form.html', {'form': form})
+    return TemplateResponse(
+        request, 'todos/todo_form.html', {'title': 'Update', 'form': form}
+    )
 
 
 @login_required
@@ -63,9 +67,7 @@ def todo_toggle(request: HttpRequest, id: int) -> TemplateResponse | None:
         return TemplateResponse(
             request,
             'todos/partials/checkbox.html',
-            {
-                'todo': todo,
-            },
+            {'todo': todo},
         )
 
 
@@ -77,11 +79,7 @@ def sort_todos(request: HttpRequest) -> TemplateResponse:
     new_ordered_todos = []
 
     for index, todo_pk in enumerate(current_todos_order, start=1):
-        todo: Todo = (
-            Todo.objects.select_related('user')
-            .filter(user=request.user)
-            .get(pk=todo_pk)
-        )
+        todo: Todo = request.user.todos.prefetch_related('todo').get(pk=todo_pk)
         todo.order = index
         new_ordered_todos.append(todo)
 
@@ -90,7 +88,5 @@ def sort_todos(request: HttpRequest) -> TemplateResponse:
     return TemplateResponse(
         request,
         'todos/partials/list.html',
-        {
-            'todos': user.todos.all(),
-        },
+        {'todos': user.todos.all()},
     )
