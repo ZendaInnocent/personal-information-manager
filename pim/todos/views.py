@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
@@ -53,10 +53,15 @@ def todo_update(request, id) -> TemplateResponse:
 
 
 @login_required
-def todo_delete(request: HttpRequest, id: int) -> HttpResponseRedirect:
-    request.user.todos.get(id=id).delete()
-    messages.success(request, 'Task deleted successful.')
-    return HttpResponseRedirect(reverse_lazy('todos:todo-list'))
+def todo_delete(request: HttpRequest, id: int) -> TemplateResponse:
+    if request.method == 'POST':
+        request.user.todos.get(id=id).delete()
+        messages.success(request, 'Task deleted successful.')
+        return TemplateResponse(
+            request,
+            'todos/partials/list.html',
+            {'todos': request.user.todos.all()},
+        )
 
 
 @login_required
