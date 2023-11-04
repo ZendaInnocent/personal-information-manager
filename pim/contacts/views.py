@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpRequest
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.views import generic
@@ -57,3 +58,14 @@ class ContactDeleteView(generic.DeleteView):
 
 
 contact_delete = ContactDeleteView.as_view()
+
+
+def contact_search(request: HttpRequest) -> TemplateResponse:
+    q = request.GET.get('q', None)
+    contacts = []
+    if q is not None:
+        contacts = Contact.objects.filter(name__icontains=q)
+
+    return TemplateResponse(
+        request, 'contacts/contact_list.html', {'contacts': contacts}
+    )
