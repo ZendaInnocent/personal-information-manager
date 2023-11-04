@@ -5,6 +5,9 @@
   <div class="col-8">
     <h2>
       {{ contact.name | capfirst }}
+      <span hx-post="{% url 'contacts:contact-toggle-favorite' contact.slug %}">
+        {% include 'contacts/favorite.html' %}
+      </span>
     </h2>
     {% if contact.title %}
     <h4>{{ contact.title }}</h4>

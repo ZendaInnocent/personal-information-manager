@@ -46,3 +46,7 @@ class Contact(models.Model):
         if not self.slug:
             self.slug = slugify(self.name) + '-' + get_random_string(8)
         return super().save(*args, **kwargs)
+
+    def toggle_favorite(self):
+        self.is_favorite = not self.is_favorite
+        self.save()

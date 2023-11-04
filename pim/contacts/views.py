@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest
+from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.views import generic
@@ -69,3 +70,9 @@ def contact_search(request: HttpRequest) -> TemplateResponse:
     return TemplateResponse(
         request, 'contacts/contact_list.html', {'contacts': contacts}
     )
+
+
+def toggle_favorite(request: HttpRequest, slug: str) -> TemplateResponse:
+    contact: Contact = get_object_or_404(Contact, slug=slug)
+    contact.toggle_favorite()
+    return TemplateResponse(request, 'contacts/favorite.html', {'contact': contact})

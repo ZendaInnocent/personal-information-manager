@@ -12,4 +12,9 @@ urlpatterns = [
     path('<slug:slug>/', views.contact_detail, name='contact-detail'),
     path('<slug:slug>/edit/', views.contact_edit, name='contact-edit'),
     path('<slug:slug>/delete/', views.contact_delete, name='contact-delete'),
+    path(
+        '<slug:slug>/toggle-favorite/',
+        views.toggle_favorite,
+        name='contact-toggle-favorite',
+    ),
 ]
