@@ -11,6 +11,7 @@ class ContactForm(forms.ModelForm):
             'name',
             'phone_number',
             'title',
+            'organization',
             'avatar',
             'is_favorite',
             'email',
