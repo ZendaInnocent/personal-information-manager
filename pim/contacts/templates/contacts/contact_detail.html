@@ -13,7 +13,7 @@
       some text goes here
     </p>
     <div class="d-flex">
-      <button class="btn btn-primary me-2">
+      <button class="btn btn-primary me-2" hx-get="{% url 'contacts:contact-edit' contact.slug %}" hx-target="#detail">
         Edit
       </button>
       <button class="btn btn-danger">
