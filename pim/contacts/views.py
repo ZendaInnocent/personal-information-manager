@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views import generic
 
 from .forms import ContactForm
 from .models import Contact
@@ -11,7 +11,7 @@ def index(request):
     return TemplateResponse(request, 'contacts/index.html', {})
 
 
-class ContactListView(LoginRequiredMixin, ListView):
+class ContactListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'contacts'
 
     def get_queryset(self):
@@ -21,7 +21,7 @@ class ContactListView(LoginRequiredMixin, ListView):
 contact_list = ContactListView.as_view()
 
 
-class ContactCreateView(CreateView):
+class ContactCreateView(generic.CreateView):
     model = Contact
     form_class = ContactForm
     success_url = reverse_lazy('contacts:index')
@@ -34,7 +34,7 @@ class ContactCreateView(CreateView):
 contact_add = ContactCreateView.as_view()
 
 
-class ContactDetailView(DetailView):
+class ContactDetailView(generic.DetailView):
     model = Contact
     context_object_name = 'contact'
 
@@ -42,10 +42,18 @@ class ContactDetailView(DetailView):
 contact_detail = ContactDetailView.as_view()
 
 
-class ContactUpdateView(UpdateView):
+class ContactUpdateView(generic.UpdateView):
     model = Contact
     form_class = ContactForm
     extra_context = {'title': 'Edit'}
 
 
 contact_edit = ContactUpdateView.as_view()
+
+
+class ContactDeleteView(generic.DeleteView):
+    model = Contact
+    success_url = reverse_lazy('contacts:index')
+
+
+contact_delete = ContactDeleteView.as_view()

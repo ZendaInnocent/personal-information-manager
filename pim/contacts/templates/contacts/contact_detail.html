@@ -16,9 +16,36 @@
       <button class="btn btn-primary me-2" hx-get="{% url 'contacts:contact-edit' contact.slug %}" hx-target="#detail">
         Edit
       </button>
-      <button class="btn btn-danger">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
         Delete
       </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">
+          Delete Contact
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete <b>{{ contact.name }}</b>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+        <button type="button" class="btn btn-danger" hx-delete="{% url 'contacts:contact-delete' contact.slug %}"
+          hx-target="body">
+          Yes
+        </button>
+      </div>
     </div>
   </div>
 </div>
