@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <ul class="list-group" id="contacts">
   {% for contact in contacts %}
   <li class="list-group-item btn text-start" hx-get="{% url 'contacts:contact-detail' contact.slug %}"
@@ -5,6 +7,10 @@
     {{ contact }}
   </li>
   {% empty %}
+
+  {% blocktrans %}
   No Contacts yet.
+  {% endblocktrans %}
+
   {% endfor %}
 </ul>

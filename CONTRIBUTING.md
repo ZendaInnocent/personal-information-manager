@@ -2,22 +2,22 @@
 
 - Create a new branch for your feature or bug fix
 
-    ```bash
-    git checkout -b <branch-name>
-    ```
+  ```bash
+  git checkout -b <branch-name>
+  ```
 
 - Make your changes and commit them
 
-    ```bash
-    git add .
-    git commit -m "your message"
-    ```
+  ```bash
+  git add .
+  git commit -m "your message"
+  ```
 
 - Push to the branch
 
-    ```bash
-    git push origin <branch-name>
-    ```
+  ```bash
+  git push origin <branch-name>
+  ```
 
 - Create a pull request from your branch to the main repository.
 
@@ -36,3 +36,18 @@ If the package is for development, then add it to the project using:
 ```bash
 pipenv install <package-name> --dev
 ```
+
+## Translations
+
+```
+# Create or update message file for all locales
+python manage.py makemessages -a
+
+# Create or update message file for a locale
+python manage.py makemessages -l <lang-code>
+
+# use the lang code for the locale you want, eg. sw
+python manage.py makemessages -l sw
+```
+
+Access translation using http://localhost:8000/rosetta

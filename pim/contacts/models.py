@@ -3,6 +3,7 @@ from django.db import models
 from django.urls import reverse_lazy
 from django.utils.crypto import get_random_string
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -13,18 +14,21 @@ class Contact(models.Model):
         related_name='contacts',
     )
     slug = models.SlugField(max_length=100, unique=True)
-    name = models.CharField(max_length=100)
-    title = models.CharField(max_length=100, blank=True, null=True)
+    name = models.CharField(_('name'), max_length=100)
+    title = models.CharField(_('title'), max_length=100, blank=True, null=True)
     avatar = models.ImageField(
+        _('avatar'),
         upload_to='media/avatars',
         blank=True,
         null=True,
         default='static/images/User Avatar.jpg',
     )
-    is_favorite = models.BooleanField(default=False)
-    email = models.EmailField(blank=True, null=True)
-    phone_number = PhoneNumberField()
-    organization = models.CharField(max_length=100, blank=True, null=True)
+    is_favorite = models.BooleanField(_('is favorite'), default=False)
+    email = models.EmailField(_('email'), blank=True, null=True)
+    phone_number = PhoneNumberField(_('phone number'))
+    organization = models.CharField(
+        _('organization'), max_length=100, blank=True, null=True
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

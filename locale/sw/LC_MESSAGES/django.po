@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-26 11:45+0300\n"
-"PO-Revision-Date: 2023-08-26 13:33+0300\n"
+"POT-Creation-Date: 2023-11-04 12:35+0300\n"
+"PO-Revision-Date: 2023-11-04 12:36+0300\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,13 +19,77 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
 
-#: .\config\settings.py:142
+#: .\config\settings.py:146
 msgid "English"
 msgstr "Kiingereza"
 
-#: .\config\settings.py:143
+#: .\config\settings.py:147
 msgid "Swahili"
 msgstr "Kiswahili"
+
+#: .\pim\contacts\models.py:17
+msgid "name"
+msgstr "Jina"
+
+#: .\pim\contacts\models.py:18
+msgid "title"
+msgstr "Cheo"
+
+#: .\pim\contacts\models.py:20
+msgid "avatar"
+msgstr ""
+
+#: .\pim\contacts\models.py:26
+msgid "is favorite"
+msgstr ""
+
+#: .\pim\contacts\models.py:27
+msgid "email"
+msgstr "Barua Pepe"
+
+#: .\pim\contacts\models.py:28
+msgid "phone number"
+msgstr "namba ya simu"
+
+#: .\pim\contacts\models.py:30
+msgid "organization"
+msgstr "taasis"
+
+#: .\pim\contacts\templates\contacts\contact_form.html:5
+#, python-format
+msgid ""
+"\n"
+"  %(title)s Contact\n"
+"  "
+msgstr ""
+
+#: .\pim\contacts\templates\contacts\contact_form.html:19
+#: .\pim\notes\templates\notes\note_form.html:15
+#: .\pim\todos\templates\todos\todo_form.html:14
+msgid "Save"
+msgstr "Hifadhi"
+
+#: .\pim\contacts\templates\contacts\contact_list.html:11
+#, fuzzy
+#| msgid "No notes yet."
+msgid ""
+"\n"
+"  No Contacts yet.\n"
+"  "
+msgstr "Hakuna Maelezo"
+
+#: .\pim\contacts\templates\contacts\index.html:5 .\templates\base.html:41
+msgid "Contacts"
+msgstr ""
+
+#: .\pim\contacts\templates\contacts\index.html:10
+msgid "Search"
+msgstr ""
+
+#: .\pim\contacts\templates\contacts\index.html:14
+#: .\pim\notes\templates\notes\index.html:23
+msgid "Add"
+msgstr "Ongeza"
 
 #: .\pim\main\templates\main\home.html:6
 msgid "Pricing"
@@ -39,7 +103,7 @@ msgstr "Chagua"
 msgid "No plans yet"
 msgstr "Hakuna Bei"
 
-#: .\pim\notes\templates\notes\index.html:5 .\templates\base.html:41
+#: .\pim\notes\templates\notes\index.html:5 .\templates\base.html:48
 msgid "Notes"
 msgstr "Maelezo"
 
@@ -50,11 +114,6 @@ msgstr "Tazama"
 #: .\pim\notes\templates\notes\index.html:21
 msgid "No notes yet."
 msgstr "Hakuna Maelezo"
-
-#: .\pim\notes\templates\notes\index.html:23
-#: .\pim\todos\templates\todos\partials\form.html:19
-msgid "Add"
-msgstr "Ongeza"
 
 #: .\pim\notes\templates\notes\note_confirm_delete.html:7
 msgid " Do you want to delete?"
@@ -76,45 +135,27 @@ msgstr "Hariri"
 msgid "Delete"
 msgstr "Futa"
 
-#: .\pim\notes\templates\notes\note_form.html:15
-msgid "Save"
-msgstr "Hifadhi"
-
-#: .\pim\todos\models.py:19
+#: .\pim\todos\models.py:16
 msgid "text"
 msgstr "maelezo"
 
-#: .\pim\todos\models.py:20
-msgid "is_completed"
+#: .\pim\todos\models.py:17
+#, fuzzy
+#| msgid "is_completed"
+msgid "is completed"
 msgstr "imekamilika"
 
-#: .\pim\todos\models.py:21
+#: .\pim\todos\models.py:22
 msgid "created_at"
 msgstr "imeundwa_saa"
 
-#: .\pim\todos\models.py:22
+#: .\pim\todos\models.py:25
 msgid "updated_at"
 msgstr "imehaririwa_saa"
 
-#: .\pim\todos\models.py:43
-msgid "order"
-msgstr "mpangilio"
-
-#: .\pim\todos\templates\todos\index.html:6 .\templates\base.html:34
+#: .\pim\todos\templates\todos\todo_list.html:7 .\templates\base.html:34
 msgid "Todos"
 msgstr "Za Kufanya"
-
-#: .\pim\todos\templates\todos\partials\form.html:9
-msgid "What needs to be done"
-msgstr "Nini kinatakiwa kufanyika"
-
-#: .\pim\todos\templates\todos\partials\form.html:15
-msgid "Update"
-msgstr "Hariri"
-
-#: .\pim\todos\templates\todos\partials\form.html:23
-msgid "Loading"
-msgstr "Inapakia"
 
 #: .\templates\account\account_inactive.html:5
 #: .\templates\account\account_inactive.html:8
@@ -155,7 +196,7 @@ msgstr ""
 
 #: .\templates\account\email.html:36
 msgid "Remove"
-msgstr ""
+msgstr "Ondoa"
 
 #: .\templates\account\email.html:43
 msgid "Warning:"
@@ -170,15 +211,15 @@ msgstr ""
 
 #: .\templates\account\email.html:48
 msgid "Add E-mail Address"
-msgstr ""
+msgstr "Ongeza Barua Pepe"
 
 #: .\templates\account\email.html:53
 msgid "Add E-mail"
-msgstr ""
+msgstr "Ongeza Barua Pepe"
 
 #: .\templates\account\email.html:63
 msgid "Do you really want to remove the selected e-mail address?"
-msgstr ""
+msgstr "Unataka kuondoa barua pepe iliyochaguliwa?"
 
 #: .\templates\account\email\account_already_exists_message.txt:4
 #, python-format
@@ -275,7 +316,7 @@ msgid ""
 msgstr ""
 
 #: .\templates\account\logout.html:5 .\templates\account\logout.html:18
-#: .\templates\base.html:50
+#: .\templates\base.html:65
 msgid "Log Out"
 msgstr "Ondoka"
 
@@ -322,11 +363,11 @@ msgstr ""
 
 #: .\templates\account\messages\password_changed.txt:2
 msgid "Password successfully changed."
-msgstr ""
+msgstr "Nywila imefanikiwa kubadilishwa."
 
 #: .\templates\account\messages\password_set.txt:2
 msgid "Password successfully set."
-msgstr ""
+msgstr "Nywila imewekwa kikamilifu."
 
 #: .\templates\account\messages\primary_email_set.txt:2
 msgid "Primary e-mail address set."
@@ -455,14 +496,30 @@ msgstr "Meneja wa Habari Binafsi"
 msgid "Elegant PIM"
 msgstr ""
 
-#: .\templates\base.html:58
+#: .\templates\base.html:55
+msgid "Appointments"
+msgstr ""
+
+#: .\templates\base.html:73
 msgid "Log In"
 msgstr "Ingia"
 
-#: .\templates\base.html:65
+#: .\templates\base.html:80
 msgid "Sign Up"
 msgstr "Jisajili"
 
-#: .\templates\base.html:103
+#: .\templates\base.html:125
 msgid "Made with Love by"
 msgstr "Imefanywa kwa Upendo na"
+
+#~ msgid "order"
+#~ msgstr "mpangilio"
+
+#~ msgid "What needs to be done"
+#~ msgstr "Nini kinatakiwa kufanyika"
+
+#~ msgid "Update"
+#~ msgstr "Hariri"
+
+#~ msgid "Loading"
+#~ msgstr "Inapakia"
