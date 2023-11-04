@@ -11,10 +11,15 @@ class Contact(models.Model):
         on_delete=models.CASCADE,
         related_name='contacts',
     )
-    slug = models.SlugField(max_length=100)
+    slug = models.SlugField(max_length=100, unique=True)
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=100, blank=True, null=True)
-    avatar = models.ImageField(upload_to='media/avatars', blank=True, null=True)
+    avatar = models.ImageField(
+        upload_to='media/avatars',
+        blank=True,
+        null=True,
+        default='static/images/User Avatar.jpg',
+    )
     is_favorite = models.BooleanField(default=False)
     email = models.EmailField(blank=True, null=True)
     phone_number = PhoneNumberField()

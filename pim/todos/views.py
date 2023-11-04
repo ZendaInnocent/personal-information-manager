@@ -84,7 +84,7 @@ def sort_todos(request: HttpRequest) -> TemplateResponse:
     new_ordered_todos = []
 
     for index, todo_pk in enumerate(current_todos_order, start=1):
-        todo: Todo = request.user.todos.prefetch_related('todo').get(pk=todo_pk)
+        todo: Todo = request.user.todos.get(pk=todo_pk)
         todo.order = index
         new_ordered_todos.append(todo)
 

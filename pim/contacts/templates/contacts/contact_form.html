@@ -1,13 +1,11 @@
-{% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% load i18n %}
 
-{% block content %}
-<form action="" method="post" enctype="multipart/form-data">
+<h2>{{ title }} Contact</h2>
+<form method="post" enctype="multipart/form-data" hx-post="{% url 'contacts:contact-add' %}" hx-target="body">
   {% csrf_token %}
   {{ form | crispy }}
   <button class="btn btn-primary">
-    {% trans 'Add' %}
+    {% trans 'Save' %}
   </button>
 </form>
-{% endblock content %}

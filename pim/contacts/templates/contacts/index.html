@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Contacts</h3>
+
+<div class="row">
+  <div class="col-md-4 border-end">
+    <div class="d-flex align-items-center justify-content-between">
+      <form class="me-2 w-100">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+      </form>
+      <button class="btn btn-outline-primary" hx-get="{% url 'contacts:contact-add' %}" hx-target="#detail">
+        Add
+      </button>
+    </div>
+    <hr>
+    <ul class="list-group" id="contacts" hx-get="{% url 'contacts:contact-list' %}" hx-trigger="load">
+    </ul>
+  </div>
+
+  <div class="col-md-8 px-4" id="detail">
+
+  </div>
+</div>
+{% endblock content %}

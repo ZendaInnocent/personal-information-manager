@@ -1,18 +1,10 @@
-{% extends 'base.html' %}
-
-{% block content %}
-
-<div class="">
-  <h5>Contacts</h5>
-
-  <ul>
-    {% for contact in contacts %}
-    <li><a href="{{ contact.get_absolute_url }}">{{ contact }}</a></li>
-    {% empty %}
-    No Contacts yet. <a href="{% url 'contacts:contact-add' %}" class="">Add</a>
-    {% endfor %}
-
-  </ul>
-</div>
-
-{% endblock content %}
+<ul class="list-group" id="contacts">
+  {% for contact in contacts %}
+  <li class="list-group-item btn text-start" hx-get="{% url 'contacts:contact-detail' contact.slug %}"
+    hx-trigger="click" hx-target="#detail">
+    {{ contact }}
+  </li>
+  {% empty %}
+  No Contacts yet.
+  {% endfor %}
+</ul>
