@@ -13,6 +13,7 @@ from pathlib import Path
 
 from decouple import config
 from django.contrib import messages
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -215,3 +216,5 @@ PHONENUMBER_DB_FORMAT = 'INTERNATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'TZ'
 
 PHONENUMBER_DEFAULT_FORMAT = 'INTERNATIONAL'
+
+LOGIN_REDIRECT_URL = reverse_lazy('main:home')

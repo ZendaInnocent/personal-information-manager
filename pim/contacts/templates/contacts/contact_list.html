@@ -2,9 +2,9 @@
 
 <ul class="list-group" id="contacts">
   {% for contact in contacts %}
-  <li class="list-group-item btn text-start" hx-get="{% url 'contacts:contact-detail' contact.slug %}"
-    hx-trigger="click" hx-target="#detail">
-    {{ contact }}
+  <li class="list-group-item btn text-start d-flex align-items-center justify-content-between"
+    hx-get="{% url 'contacts:contact-detail' contact.slug %}" hx-trigger="click" hx-target="#detail">
+    {{ contact }} {% include 'contacts/favorite.html' with contact=contact %}
   </li>
   {% empty %}
 

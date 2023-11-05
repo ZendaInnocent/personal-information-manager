@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
@@ -9,7 +10,8 @@ from .forms import ContactForm
 from .models import Contact
 
 
-def index(request):
+@login_required
+def index(request) -> TemplateResponse:
     return TemplateResponse(request, 'contacts/index.html', {})
 
 
@@ -17,13 +19,13 @@ class ContactListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'contacts'
 
     def get_queryset(self):
-        return Contact.objects.filter(user=self.request.user)
+        return self.request.user.contacts.all()
 
 
 contact_list = ContactListView.as_view()
 
 
-class ContactCreateView(generic.CreateView):
+class ContactCreateView(LoginRequiredMixin, generic.CreateView):
     model = Contact
     form_class = ContactForm
     success_url = reverse_lazy('contacts:index')
@@ -36,43 +38,55 @@ class ContactCreateView(generic.CreateView):
 contact_add = ContactCreateView.as_view()
 
 
-class ContactDetailView(generic.DetailView):
+class ContactDetailView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
     model = Contact
     context_object_name = 'contact'
+
+    def test_func(self) -> bool | None:
+        return self.get_object().user == self.request.user
 
 
 contact_detail = ContactDetailView.as_view()
 
 
-class ContactUpdateView(generic.UpdateView):
+class ContactUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Contact
     form_class = ContactForm
     extra_context = {'title': 'Edit'}
+
+    def test_func(self) -> bool | None:
+        return self.get_object().user == self.request.user
 
 
 contact_edit = ContactUpdateView.as_view()
 
 
-class ContactDeleteView(generic.DeleteView):
+class ContactDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     model = Contact
     success_url = reverse_lazy('contacts:index')
+
+    def test_func(self) -> bool | None:
+        return self.get_object().user == self.request.user
 
 
 contact_delete = ContactDeleteView.as_view()
 
 
+@login_required
 def contact_search(request: HttpRequest) -> TemplateResponse:
     q = request.GET.get('q', None)
     contacts = []
     if q is not None:
-        contacts = Contact.objects.filter(name__icontains=q)
+        contacts = request.user.contacts.filter(name__icontains=q)
 
     return TemplateResponse(
         request, 'contacts/contact_list.html', {'contacts': contacts}
     )
 
 
+@login_required
 def toggle_favorite(request: HttpRequest, slug: str) -> TemplateResponse:
-    contact: Contact = get_object_or_404(Contact, slug=slug)
+    contact: Contact = get_object_or_404(Contact, slug=slug, user=request.user)
     contact.toggle_favorite()
-    return TemplateResponse(request, 'contacts/favorite.html', {'contact': contact})
+    context = {'contact': contact}
+    return TemplateResponse(request, 'contacts/favorite.html', context)
