@@ -11,4 +11,5 @@ class ContactAdmin(admin.ModelAdmin):
         'is_favorite',
         'email',
         'phone_number',
+        'user',
     ]

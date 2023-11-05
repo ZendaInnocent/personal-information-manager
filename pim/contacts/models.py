@@ -18,10 +18,10 @@ class Contact(models.Model):
     title = models.CharField(_('title'), max_length=100, blank=True, null=True)
     avatar = models.ImageField(
         _('avatar'),
-        upload_to='media/avatars',
+        upload_to='avatars',
         blank=True,
         null=True,
-        default='static/images/User Avatar.jpg',
+        default='avatars/User Avatar.jpg',
     )
     is_favorite = models.BooleanField(_('is favorite'), default=False)
     email = models.EmailField(_('email'), blank=True, null=True)
