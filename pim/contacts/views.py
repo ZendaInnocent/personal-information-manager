@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
@@ -77,7 +78,9 @@ def contact_search(request: HttpRequest) -> TemplateResponse:
     q = request.GET.get('q', None)
     contacts = []
     if q is not None:
-        contacts = request.user.contacts.filter(name__icontains=q)
+        contacts = request.user.contacts.filter(
+            Q(name__icontains=q) | Q(title__icontains=q) | Q(organization__icontains=q)
+        )
 
     return TemplateResponse(
         request, 'contacts/contact_list.html', {'contacts': contacts}
