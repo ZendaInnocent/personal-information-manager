@@ -1,7 +1,10 @@
+from typing import Any
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.http import HttpRequest
+from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
@@ -29,11 +32,15 @@ contact_list = ContactListView.as_view()
 class ContactCreateView(LoginRequiredMixin, generic.CreateView):
     model = Contact
     form_class = ContactForm
-    success_url = reverse_lazy('contacts:index')
     extra_context = {'title': 'Add'}
 
     def get_initial(self):
         return {'user': self.request.user}
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        response = super().dispatch(request, *args, **kwargs)
+        response['HX-Trigger'] = 'loadcontacts'
+        return response
 
 
 contact_add = ContactCreateView.as_view()
@@ -45,6 +52,11 @@ class ContactDetailView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailV
 
     def test_func(self) -> bool | None:
         return self.get_object().user == self.request.user
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        response = super().dispatch(request, *args, **kwargs)
+        response['HX-Trigger'] = 'loadcontacts'
+        return response
 
 
 contact_detail = ContactDetailView.as_view()
@@ -92,4 +104,6 @@ def toggle_favorite(request: HttpRequest, slug: str) -> TemplateResponse:
     contact: Contact = get_object_or_404(Contact, slug=slug, user=request.user)
     contact.toggle_favorite()
     context = {'contact': contact}
-    return TemplateResponse(request, 'contacts/favorite.html', context)
+    response = TemplateResponse(request, 'contacts/favorite.html', context)
+    response['HX-Trigger'] = 'loadcontacts'
+    return response

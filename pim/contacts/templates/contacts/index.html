@@ -19,11 +19,13 @@
     <div class="spinner-border text-primary htmx-indicator" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
-    <ul class="list-group" id="contacts" hx-get="{% url 'contacts:contact-list' %}" hx-trigger="load">
+    <ul class="list-group" id="contacts" hx-get="{% url 'contacts:contact-list' %}"
+      hx-trigger="load, loadcontacts from:body">
     </ul>
   </div>
 
   <div class="col-md-8 px-4" id="detail">
+    <h3 class="my-3">No contact selected</h3>
     <div class="row mt-4 mt-md-0">
       <div class="col-md-4">
         <div class="bg-secondary h-100 w-100 rounded"></div>
