@@ -2,11 +2,16 @@
 {% load i18n %}
 
 {% block content %}
-<h1>{% trans 'Notes' %}</h1>
+<div class="d-flex align-items-center">
+  <h1>{% trans 'Notes' %}</h1>
+  <a href="{% url 'notes:note-create' %}" class="btn btn-success ms-5">
+    {% trans 'Add' %}
+  </a>
+</div>
 
 <div class="row py-3">
   {% for note in notes %}
-  <div class="col-sm-6 mb-3">
+  <div class="col-sm-6 col-md-4 mb-3">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">{{ note.title }}</h5>
@@ -18,10 +23,8 @@
     </div>
   </div>
   {% empty %}
-  <p class="lead">{% trans 'No notes yet.' %}
-    <a href="{% url 'notes:note-create' %}" class="btn btn-primary">
-      {% trans 'Add' %}
-    </a>
+  <p class="lead">
+    {% trans 'No notes yet.' %}
   </p>
   {% endfor %}
 </div>
