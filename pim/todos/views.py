@@ -1,8 +1,7 @@
 from django.contrib import messages
-from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 
@@ -11,14 +10,17 @@ from .models import Todo
 
 
 @login_required
-def todo_list(request: HttpRequest) -> TemplateResponse:
-    todos: [Todo] = request.user.todos.all()
-    return TemplateResponse(request, 'todos/todo_list.html', {'todos': todos})
+def index(request):
+    context = {
+        'todos': request.user.todos.all(),
+        'form': TodoForm(initial={'user': request.user}),
+    }
+    return render(request, 'todos/index.html', context)
 
 
 @login_required
-def todo_add(request: HttpRequest) -> TemplateResponse:
-    form: TodoForm = TodoForm(initial={'user': request.user})
+def todo_create(request):
+    form = TodoForm(initial={'user': request.user})
 
     if request.method == 'POST':
         form = TodoForm(request.POST)
@@ -26,16 +28,15 @@ def todo_add(request: HttpRequest) -> TemplateResponse:
         if form.is_valid():
             form.save()
             messages.success(request, 'Task added successful.')
-            return redirect(reverse_lazy('todos:todo-list'))
-        else:
-            form = TodoForm(request.POST)
+            return redirect(reverse_lazy('todos:todo-index'))
+
     return TemplateResponse(
         request, 'todos/todo_form.html', {'title': 'Add', 'form': form}
     )
 
 
 @login_required
-def todo_update(request, id) -> TemplateResponse:
+def todo_update(request, id):
     todo: Todo = request.user.todos.get(id=id)
     form = TodoForm(instance=todo)
 
@@ -45,7 +46,7 @@ def todo_update(request, id) -> TemplateResponse:
         if form.is_valid():
             form.save()
             messages.success(request, 'Task updated successful.')
-            return redirect(reverse_lazy('todos:todo-list'))
+            return redirect(reverse_lazy('todos:todo-index'))
 
     return TemplateResponse(
         request, 'todos/todo_form.html', {'title': 'Update', 'form': form}
@@ -53,7 +54,7 @@ def todo_update(request, id) -> TemplateResponse:
 
 
 @login_required
-def todo_delete(request: HttpRequest, id: int) -> TemplateResponse:
+def todo_delete(request: HttpRequest, id: int):
     if request.method == 'POST':
         request.user.todos.get(id=id).delete()
         messages.success(request, 'Task deleted successful.')
@@ -65,7 +66,7 @@ def todo_delete(request: HttpRequest, id: int) -> TemplateResponse:
 
 
 @login_required
-def todo_toggle(request: HttpRequest, id: int) -> TemplateResponse | None:
+def todo_toggle(request: HttpRequest, id: int):
     if request.method == 'POST':
         todo: Todo = request.user.todos.get(id=id)
         todo.toggle_completed()
@@ -77,8 +78,8 @@ def todo_toggle(request: HttpRequest, id: int) -> TemplateResponse | None:
 
 
 @login_required
-def sort_todos(request: HttpRequest) -> TemplateResponse:
-    user: AbstractBaseUser = request.user
+def sort_todos(request):
+    user = request.user
     current_todos_order = request.POST.getlist('todo')
 
     new_ordered_todos = []
@@ -92,6 +93,6 @@ def sort_todos(request: HttpRequest) -> TemplateResponse:
 
     return TemplateResponse(
         request,
-        'todos/partials/list.html',
+        'todos/partials/todo_list.html',
         {'todos': user.todos.all()},
     )

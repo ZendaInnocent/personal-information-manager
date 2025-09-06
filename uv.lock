@@ -176,6 +176,11 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/89/98/0413e47d7d1fab0e5a81eda6caacdcba69d50f74f64b65febf943cbd1f1e/django_phonenumber_field-8.1.0-py3-none-any.whl", hash = "sha256:9ba66873bf47401b13fc57797fbf85e785864a6bfdc8b9daa3a9012886567045", size = 65208, upload-time = "2025-04-10T16:09:27.843Z" },
 ]
 
+[package.optional-dependencies]
+phonenumberslite = [
+    { name = "phonenumberslite" },
+]
+
 [[package]]
 name = "django-rosetta"
 version = "0.10.2"
@@ -266,7 +271,7 @@ dependencies = [
     { name = "django-allauth" },
     { name = "django-crispy-forms" },
     { name = "django-htmx" },
-    { name = "django-phonenumber-field" },
+    { name = "django-phonenumber-field", extra = ["phonenumberslite"] },
     { name = "django-rosetta" },
     { name = "django-tinymce" },
     { name = "pillow" },
@@ -279,6 +284,7 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "django-debug-toolbar" },
+    { name = "pre-commit" },
     { name = "pytest-django" },
 ]
 
@@ -289,7 +295,7 @@ requires-dist = [
     { name = "django-allauth", specifier = ">=65.11.1" },
     { name = "django-crispy-forms", specifier = ">=2.4" },
     { name = "django-htmx", specifier = ">=1.23.2" },
-    { name = "django-phonenumber-field", specifier = ">=8.1.0" },
+    { name = "django-phonenumber-field", extras = ["phonenumberslite"], specifier = ">=8.1.0" },
     { name = "django-rosetta", specifier = ">=0.10.2" },
     { name = "django-tinymce", specifier = ">=4.1.0" },
     { name = "pillow", specifier = ">=11.3.0" },
@@ -302,7 +308,17 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "django-debug-toolbar", specifier = ">=6.0.0" },
+    { name = "pre-commit", specifier = ">=4.3.0" },
     { name = "pytest-django", specifier = ">=4.11.1" },
+]
+
+[[package]]
+name = "phonenumberslite"
+version = "9.0.13"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e0/5a/07e314b5b8845add2a1a2243309cdbbed903254f474834f9b22cd47f9b88/phonenumberslite-9.0.13.tar.gz", hash = "sha256:05165e3b8dc6c44800c9a3276c46b7f8337e2e4e5f64870d29b2cc8e5e199746", size = 2298022, upload-time = "2025-08-29T09:39:31.869Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7e/eb/8813ca1310c0d46db53e33bc591443303e78dd826bc45d14710be6481ed5/phonenumberslite-9.0.13-py2.py3-none-any.whl", hash = "sha256:b128f7ebcb8f8a4d1661f7b6f271bde5dfa7c235b02930a723ee268052fcd298", size = 472337, upload-time = "2025-08-29T09:39:27.21Z" },
 ]
 
 [[package]]

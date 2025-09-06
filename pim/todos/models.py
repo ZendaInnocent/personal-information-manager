@@ -11,22 +11,22 @@ class Todo(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="todos",
+        related_name='todos',
     )
-    text = models.CharField(_("text"), max_length=100)
-    is_completed = models.BooleanField(_("is completed"), default=False)
+    text = models.CharField(_('text'), max_length=100)
+    is_completed = models.BooleanField(_('is completed'), default=False)
     order = models.PositiveIntegerField()
-    due_date = models.DateTimeField(_("due date"), blank=True, null=True)
+    due_date = models.DateTimeField(_('due date'), blank=True, null=True)
 
     created_at = models.DateTimeField(
-        _("created at"),
+        _('created at'),
         auto_now_add=True,
     )
-    updated_at = models.DateTimeField(_("updated at"), auto_now=True)
+    updated_at = models.DateTimeField(_('updated at'), auto_now=True)
 
     class Meta:
         ordering: list[str] = [
-            "order",
+            'order',
         ]
 
     def __str__(self) -> str:

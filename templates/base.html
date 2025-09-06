@@ -31,7 +31,7 @@
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           {% if request.user.is_authenticated %}
           <li class="nav-item">
-            <a href="{% url 'todos:todo-list' %}"
+            <a href="{% url 'todos:todo-index' %}"
               class="nav-link {% if request.path == '/todos/' %} active {% endif %}">
               {% trans 'Todos' %}
             </a>

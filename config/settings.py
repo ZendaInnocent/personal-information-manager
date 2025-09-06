@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
 from pathlib import Path
 
 from decouple import config
@@ -61,7 +62,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'phonenumber_field',
-    'fontawesomefree',
 ]
 
 MIDDLEWARE = [
@@ -170,11 +170,11 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MESSAGE_TAGS = {
-    messages.DEBUG: "bg-light",
-    messages.INFO: "text-white bg-primary",
-    messages.SUCCESS: "text-white bg-success",
-    messages.WARNING: "text-dark bg-warning",
-    messages.ERROR: "text-white bg-danger",
+    messages.DEBUG: 'bg-light',
+    messages.INFO: 'text-white bg-primary',
+    messages.SUCCESS: 'text-white bg-success',
+    messages.WARNING: 'text-dark bg-warning',
+    messages.ERROR: 'text-white bg-danger',
 }
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
