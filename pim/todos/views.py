@@ -1,9 +1,14 @@
+from datastar_py import consts
+from datastar_py.django import ServerSentEventGenerator as SSE
+from datastar_py.django import datastar_response
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
+from django.views.decorators.http import require_http_methods
 
 from .forms import TodoForm
 from .models import Todo
@@ -19,20 +24,19 @@ def index(request):
 
 
 @login_required
+@require_http_methods(['POST'])
+@datastar_response
 def todo_create(request):
-    form = TodoForm(initial={'user': request.user})
+    form = TodoForm(initial={'user': request.user}, data=request.POST)
 
-    if request.method == 'POST':
-        form = TodoForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Task added successful.')
-            return redirect(reverse_lazy('todos:todo-index'))
-
-    return TemplateResponse(
-        request, 'todos/todo_form.html', {'title': 'Add', 'form': form}
-    )
+    if form.is_valid():
+        todo = form.save()
+        messages.success(request, f"Task '{todo.text}' added successful.")
+        yield SSE.patch_elements(
+            render_to_string('todos/partials/todo_item.html', {'todo': todo}),
+            '#todos-list form',
+            mode=consts.ElementPatchMode.APPEND,
+        )
 
 
 @login_required

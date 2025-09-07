@@ -18,7 +18,7 @@
 <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="addTodoModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <form method="POST" action="{% url 'todos:todo-create' %}">
+      <form>
         {% csrf_token %}
         <div class="modal-header">
           <h5 class="modal-title" id="addTodoModal">
@@ -30,8 +30,12 @@
           {{ form | crispy }}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" data-on-click="@post('{% url "todos:todo-create" %}', {contentType: 'form'})">
+            {% trans 'Save' %}
+          </button>
         </div>
       </form>
     </div>
