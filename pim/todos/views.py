@@ -3,11 +3,11 @@ from datastar_py.django import ServerSentEventGenerator as SSE
 from datastar_py.django import datastar_response
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 from .forms import TodoForm
@@ -69,15 +69,15 @@ def todo_delete(request, id):
 
 
 @login_required
-def todo_toggle(request: HttpRequest, id: int):
-    if request.method == 'POST':
-        todo: Todo = request.user.todos.get(id=id)
-        todo.toggle_completed()
-        return TemplateResponse(
-            request,
-            'todos/partials/checkbox.html',
-            {'todo': todo},
-        )
+@require_http_methods(['POST'])
+@csrf_exempt
+@datastar_response
+def todo_toggle(request, id: int):
+    todo: Todo = request.user.todos.get(id=id)
+    todo.toggle_completed()
+    yield SSE.patch_elements(
+        render_to_string('todos/partials/checkbox.html', {'todo': todo})
+    )
 
 
 @login_required
