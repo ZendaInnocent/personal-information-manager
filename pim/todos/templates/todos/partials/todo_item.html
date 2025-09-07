@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <li
   id="todo-{{ todo.id }}"
   class="list-group-item d-flex justify-content-between align-items-center"
@@ -31,11 +33,9 @@
     </span>
     <span
       class="btn"
-      hx-confirm="Are you sure you want to delete?"
-      hx-post="{% url 'todos:todo-delete' todo.id %}"
-      hx-target="#todos-list"
+      data-bs-toggle="modal"
+      data-bs-target="#deleteTodoModal"
     >
-      <!-- <a href="{% url 'todos:todo-delete' todo.id %}"> -->
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -55,3 +55,31 @@
     </span>
   </div>
 </li>
+
+<!-- Delete Todo Modal -->
+<div class="modal fade" id="deleteTodoModal" tabindex="-1" aria-labelledby="deleteTodoModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form>
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title">
+            {% trans "Delete Todo" %}
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            No
+          </button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" data-on-click="@post('{% url "todos:todo-delete" todo.id %}', {contentType: 'form'})">
+            {% trans 'Yes' %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

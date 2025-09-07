@@ -58,15 +58,14 @@ def todo_update(request, id):
 
 
 @login_required
-def todo_delete(request: HttpRequest, id: int):
-    if request.method == 'POST':
-        request.user.todos.get(id=id).delete()
-        messages.success(request, 'Task deleted successful.')
-        return TemplateResponse(
-            request,
-            'todos/partials/list.html',
-            {'todos': request.user.todos.all()},
-        )
+@require_http_methods(['POST'])
+@datastar_response
+def todo_delete(request, id):
+    request.user.todos.get(id=id).delete()
+    messages.success(request, 'Task deleted successful.')
+    yield SSE.patch_elements(
+        selector=f'#todo-{id}', mode=consts.ElementPatchMode.REMOVE
+    )
 
 
 @login_required
@@ -96,7 +95,5 @@ def sort_todos(request):
     user.todos.bulk_update(new_ordered_todos, fields=['order'])
 
     return TemplateResponse(
-        request,
-        'todos/partials/todo_list.html',
-        {'todos': user.todos.all()},
+        request, 'todos/partials/todo_list.html', {'todos': user.todos.all()}
     )
