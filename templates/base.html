@@ -5,138 +5,164 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    {% block title %}
-    {% trans 'Personal Information Manager' %}
-    {% endblock title %}
-  </title>
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
-  <link href="{% static 'fontawesomefree/css/all.css' %}" rel="stylesheet" type="text/css">
-  <script defer type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@main/bundles/datastar.js"></script>
-  {% block extra_head %} {% endblock extra_head %}
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      {% block title %}
+        {% trans 'Personal Information Manager' %}
+      {% endblock title %}
+    </title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}"
+          rel="stylesheet"
+          type="text/css">
+    <link href="{% static 'fontawesomefree/css/all.css' %}"
+          rel="stylesheet"
+          type="text/css">
+    <script defer
+            type="module"
+            src="https://cdn.jsdelivr.net/gh/starfederation/datastar@main/bundles/datastar.js"></script>
+    {% block extra_head %}
 
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="min-vh-100 d-flex flex-column position-relative">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-    <div class="container">
-      <a class="navbar-brand" href="/">{% trans 'Elegant PIM' %}</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          {% if request.user.is_authenticated %}
-          <li class="nav-item">
-            <a href="{% url 'todos:todo-index' %}"
-              class="nav-link {% if request.path == '/todos/' %} active {% endif %}">
-              {% trans 'Todos' %}
-            </a>
-          </li>
+    {% endblock extra_head %}
+  </head>
 
-          <li class="nav-item">
-            <a href="{% url 'contacts:index' %}"
-              class="nav-link {% if request.path == '/contacts/' %} active {% endif %}">
-              {% trans 'Contacts' %}
-            </a>
-          </li>
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+        class="min-vh-100 d-flex flex-column position-relative">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="{% url "main:home" %}">
+          {% trans 'Elegant PIM' %}
+        </a>
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a href="{% url 'todos:todo-index' %}"
+                   class="nav-link {% if request.path == '/todos/' %}active{% endif %}">
+                  {% trans 'Todos' %}
+                </a>
+              </li>
 
-          <li class="nav-item">
-            <a href="{% url 'notes:notes-index' %}"
-              class="nav-link {% if request.path == '/notes/' %} active {% endif %}">
-              {% trans 'Notes' %}
-            </a>
-          </li>
+              <li class="nav-item">
+                <a href="{% url 'contacts:index' %}"
+                   class="nav-link {% if request.path == '/contacts/' %}active{% endif %}">
+                  {% trans 'Contacts' %}
+                </a>
+              </li>
 
-          <li class="nav-item">
-            <a href="{% url 'appointments:index' %}"
-              class="nav-link {% if request.path == 'appointments' %} active {% endif %}">
-              {% trans 'Appointments' %}
-            </a>
-          </li>
+              <li class="nav-item">
+                <a href="{% url 'notes:notes-index' %}"
+                   class="nav-link {% if request.path == '/notes/' %}active{% endif %}">
+                  {% trans 'Notes' %}
+                </a>
+              </li>
 
-          {% endif %}
-        </ul>
-        <ul class="navbar-nav ms-auto">
-          {% if request.user.is_authenticated %}
-          <li class="nav-item">
-            <a href="{% url 'account_logout' %}" class="btn btn-secondary">
-              {% trans 'Log Out' %}
-            </a>
-          </li>
+              <li class="nav-item">
+                <a href="{% url 'appointments:index' %}"
+                   class="nav-link {% if request.path == 'appointments' %}active{% endif %}">
+                  {% trans 'Appointments' %}
+                </a>
+              </li>
 
-          {% else %}
-          <li class="nav-item">
-            <a href="{% url 'account_login' %}"
-              class="btn btn-primary me-2 {% if request.path == '/accounts/login/' %} active {% endif %} ">
-              {% trans 'Log In' %}
-            </a>
-          </li>
+            {% endif %}
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a href="{% url 'account_logout' %}" class="btn btn-secondary">
+                  {% trans 'Log Out' %}
+                </a>
+              </li>
 
-          <li class="nav-item">
-            <a href="{% url 'account_signup' %}" class="btn btn-success
-               {% if request.path == '/accounts/signup/' %} active {% endif %}">
-              {% trans 'Sign Up' %}
-            </a>
-          </li>
-          {% endif %}
+            {% else %}
+              <li class="nav-item">
+                <a href="{% url 'account_login' %}"
+                   class="btn btn-primary me-2 {% if request.path == '/accounts/login/' %}active{% endif %} ">
+                  {% trans 'Log In' %}
+                </a>
+              </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ LANGUAGE_CODE | upper }}
-            </a>
-            <ul class="dropdown-menu">
-              <form action="{% url 'set-language' %}" method="POST">
-                {% csrf_token %}
-                {% get_available_languages as LANGUAGES %}
-                {% get_language_info_list for LANGUAGES as languages %}
-                {% for language in languages %}
-                <li>
-                  <button type="submit" name="language" value="{{ language.code }}" class="btn dropdown-item">
-                    {{ language.name_local }}
-                  </button>
-                </li>
-                {% endfor %}
-              </form>
-            </ul>
-          </li>
+              <li class="nav-item">
+                <a href="{% url 'account_signup' %}"
+                   class="btn btn-success {% if request.path == '/accounts/signup/' %}active{% endif %}">
+                  {% trans 'Sign Up' %}
+                </a>
+              </li>
+            {% endif %}
 
-        </ul>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle"
+                 href="{% url "main:home" %}"
+                 role="button"
+                 data-bs-toggle="dropdown"
+                 aria-expanded="false">{{ LANGUAGE_CODE | upper }}</a>
+              <ul class="dropdown-menu">
+                <form action="{% url 'set-language' %}" method="post">
+                  {% csrf_token %}
+                  {% get_available_languages as LANGUAGES %}
+                  {% get_language_info_list for LANGUAGES as languages %}
+                  {% for language in languages %}
+                    <li>
+                      <button type="submit"
+                              name="language"
+                              value="{{ language.code }}"
+                              class="btn dropdown-item">
+                        {{ language.name_local }}
+                      </button>
+                    </li>
+                  {% endfor %}
+                </form>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  {% for message in messages %}
-  <div class="container mt-3 alert alert-{{message.tags}} text-white alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-  {% endfor %}
+    {% for message in messages %}
+      <div class="container mt-3 alert alert-{{ message.tags }} text-white alert-dismissible fade show"
+           role="alert">
+        {{ message }}
+        <button type="button"
+                class="btn-close text-white"
+                data-bs-dismiss="alert"
+                aria-label="Close"></button>
+      </div>
+    {% endfor %}
 
-  <main class="container my-4">
-    {% block content %}
+    <main class="container my-4">
+      {% block content %}
 
-    {% endblock content %}
-  </main>
+      {% endblock content %}
 
-  <footer class="container-fluid bg-light mt-auto">
-    <div class="container py-3">
-      {% trans 'Made with Love by' %} Innocent. &copy; 2023
-    </div>
-  </footer>
+    </main>
 
-  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'js/htmx.min.js' %}"></script>
-  <script src="{% static 'js/Sortable.min.js' %}"></script>
-  <script src="{% static 'js/sweetalert2.js' %}"></script>
-  <script src="{% static 'js/main.js' %}"></script>
-  {% if debug %}
-  <script src="{% static 'js/django-debug-toolbar.js' %}"></script>
-  {% endif %}
-</body>
+    <footer class="container-fluid bg-light mt-auto">
+      <div class="container py-3">
+        {% trans 'Made with Love by' %} Innocent. copyright 2023 - 2025
+      </div>
+    </footer>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/htmx.min.js' %}"></script>
+    <script src="{% static 'js/Sortable.min.js' %}"></script>
+    <script src="{% static 'js/sweetalert2.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    {% if debug %}
+      <script src="{% static 'js/django-debug-toolbar.js' %}"></script>
+    {% endif %}
+  </body>
 
 </html>
