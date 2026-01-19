@@ -1,6 +1,10 @@
-<div id="checkbox-{{ todo.id }}" data-on-click="@post('{% url 'todos:todo-toggle' todo.id %}')">
-  <input class="me-2 form-check-input" type="checkbox" {% if todo.is_completed %} checked {% endif %} name="status">
-  <span {% if todo.is_completed %}style="text-decoration: line-through;"{% endif %}>
+<div id="checkbox-{{ todo.id }}"
+     data-on:click="@post('{% url "todos:todo-toggle" todo.id %}')">
+  <input class="me-2 form-check-input"
+         type="checkbox"
+         name="status"
+         {% if todo.is_completed %}checked{% endif %} />
+  <span {% if todo.is_completed %}class="text-decoration-line-through"{% endif %}>
     {{ todo.text }}
   </span>
 </div>

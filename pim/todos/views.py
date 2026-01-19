@@ -72,7 +72,7 @@ def todo_delete(request, id):
 @require_http_methods(['POST'])
 @csrf_exempt
 @datastar_response
-def todo_toggle(request, id: int):
+def todo_toggle_view(request, id: int):
     todo: Todo = request.user.todos.get(id=id)
     todo.toggle_completed()
     yield SSE.patch_elements(
