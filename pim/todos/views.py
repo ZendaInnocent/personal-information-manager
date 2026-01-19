@@ -34,7 +34,7 @@ def todo_create_view(request):
         messages.success(request, f"Task '{todo.text}' added successful.")
         yield SSE.patch_elements(
             render_to_string('todos/partials/todo_item.html', {'todo': todo}),
-            '#todos-list form',
+            '#todos-list',
             mode=consts.ElementPatchMode.APPEND,
         )
 
@@ -60,7 +60,7 @@ def todo_update(request, id):
 @login_required
 @require_http_methods(['POST'])
 @datastar_response
-def todo_delete(request, id):
+def todo_delete_view(request, id):
     request.user.todos.get(id=id).delete()
     messages.success(request, 'Task deleted successful.')
     yield SSE.patch_elements(
