@@ -1,5 +1,4 @@
-{% load static %}
-{% load i18n %}
+{% load static i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 
 <!DOCTYPE html>
@@ -20,9 +19,8 @@
     <link href="{% static 'fontawesomefree/css/all.css' %}"
           rel="stylesheet"
           type="text/css">
-    <script defer
-            type="module"
-            src="https://cdn.jsdelivr.net/gh/starfederation/datastar@main/bundles/datastar.js"></script>
+    <script type="module"
+            src="https://cdn.jsdelivr.net/gh/starfederation/datastar@1.0.0-RC.7/bundles/datastar.js"></script>
     {% block extra_head %}
 
     {% endblock extra_head %}
@@ -151,7 +149,7 @@
 
     <footer class="container-fluid bg-light mt-auto">
       <div class="container py-3">
-        {% trans 'Made with Love by' %} Innocent. copyright 2023 - 2025
+        {% trans 'Made with Love by' %} Innocent. © 2023 - 2025
       </div>
     </footer>
 

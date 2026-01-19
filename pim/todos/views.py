@@ -26,7 +26,7 @@ def index(request):
 @login_required
 @require_http_methods(['POST'])
 @datastar_response
-def todo_create(request):
+def todo_create_view(request):
     form = TodoForm(initial={'user': request.user}, data=request.POST)
 
     if form.is_valid():
