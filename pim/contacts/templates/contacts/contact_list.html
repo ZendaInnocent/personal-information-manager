@@ -1,9 +1,12 @@
 {% load i18n %}
 
-<ul class="list-group" id="contacts">
+<ul class="list-group"
+    id="contacts"
+    data-signals="{selectedContactId: ''}">
   {% for contact in contacts %}
     <li class="list-group-item btn text-start d-flex align-items-center justify-content-between"
-        data-on:click="@get('{% url 'contacts:contact-detail' contact.slug %}')">
+        data-on:click="@get('{% url 'contacts:contact-detail' contact.slug %}'); $selectedContactId = '{{ contact.id }}'"
+        data-class="{ 'active': $selectedContactId === '{{ contact.id }}' }">
       {{ contact }}
       {% include 'contacts/favorite.html' with contact=contact %}
     </li>
