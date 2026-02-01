@@ -1,3 +1,4 @@
+from datastar_py.django import read_signals
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -66,9 +67,11 @@ def contact_delete_view(request, slug):
 
 
 @login_required
-def contact_search(request: HttpRequest) -> TemplateResponse:
-    q = request.GET.get('q', None)
+def contact_search_view(request: HttpRequest) -> TemplateResponse:
+    signals = read_signals(request)
+    q = signals.get('search', None)
     contacts = []
+
     if q is not None:
         contacts = request.user.contacts.filter(
             Q(name__icontains=q) | Q(title__icontains=q) | Q(organization__icontains=q)

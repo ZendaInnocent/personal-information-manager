@@ -17,16 +17,16 @@
                type="search"
                placeholder="{% trans 'Search' %}"
                aria-label="Search"
-               name="q"
-               hx-get="{% url 'contacts:contact-search' %}"
-               hx-trigger="keyup changed delay:500ms, search"
-               hx-target="#contacts"
-               hx-indicator=".htmx-indicator">
+               data-bind:search
+               data-on:input__debounce.500ms="@get('{% url "contacts:contact-search" %}')"
+               data-indicator:searching>
       </div>
       <hr>
-      {% comment %} <div class="spinner-border text-primary" role="status">
+      <div class="spinner-border text-primary"
+           role="status"
+           data-show="$searching">
         <span class="visually-hidden">Loading...</span>
-      </div> {% endcomment %}
+      </div>
 
       {% include "contacts/contact_list.html" %}
     </div>
