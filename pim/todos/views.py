@@ -3,6 +3,7 @@ from datastar_py.django import ServerSentEventGenerator as SSE
 from datastar_py.django import datastar_response
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.messages import get_messages
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
@@ -24,19 +25,18 @@ def index(request):
 
 
 @login_required
-@require_http_methods(['POST'])
-@datastar_response
 def todo_create_view(request):
-    form = TodoForm(initial={'user': request.user}, data=request.POST)
+    if request.method == 'POST':
+        form = TodoForm(data=request.POST, initial={'user': request.user})
 
-    if form.is_valid():
-        todo = form.save()
-        messages.success(request, f"Task '{todo.text}' added successful.")
-        yield SSE.patch_elements(
-            render_to_string('todos/partials/todo_item.html', {'todo': todo}),
-            '#todos-list',
-            mode=consts.ElementPatchMode.APPEND,
-        )
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Todo created successful.')
+            return redirect('todos:todo-index')
+    else:
+        form = TodoForm(initial={'user': request.user})
+
+    return render(request, 'todos/todo_form.html', {'form': form})
 
 
 @login_required
@@ -59,13 +59,11 @@ def todo_update(request, id):
 
 @login_required
 @require_http_methods(['POST'])
-@datastar_response
 def todo_delete_view(request, id):
-    request.user.todos.get(id=id).delete()
-    messages.success(request, 'Task deleted successful.')
-    yield SSE.patch_elements(
-        selector=f'#todo-{id}', mode=consts.ElementPatchMode.REMOVE
-    )
+    todo = request.user.todos.get(id=id)
+    todo.delete()
+    messages.success(request, 'Todo deleted successful.')
+    return redirect('todos:todo-index')
 
 
 @login_required
@@ -75,12 +73,14 @@ def todo_delete_view(request, id):
 def todo_toggle_view(request, id: int):
     todo: Todo = request.user.todos.get(id=id)
     todo.toggle_completed()
+
     yield SSE.patch_elements(
         render_to_string('todos/partials/checkbox.html', {'todo': todo})
     )
 
 
 @login_required
+@datastar_response
 def sort_todos(request):
     user = request.user
     current_todos_order = request.POST.getlist('todo')
@@ -93,7 +93,19 @@ def sort_todos(request):
         new_ordered_todos.append(todo)
 
     user.todos.bulk_update(new_ordered_todos, fields=['order'])
+    messages.success(request, 'Tasks reordered successfully.')
 
-    return TemplateResponse(
-        request, 'todos/partials/todo_list.html', {'todos': user.todos.all()}
+    messages_html = render_to_string(
+        'todos/partials/messages_container.html',
+        {'messages': get_messages(request)},
+        request=request,
+    )
+
+    yield SSE.patch_elements(
+        render_to_string('todos/partials/todo_list.html', {'todos': user.todos.all()})
+    )
+    yield SSE.patch_elements(
+        messages_html,
+        '#django-messages',
+        mode=consts.ElementPatchMode.PREPEND,
     )

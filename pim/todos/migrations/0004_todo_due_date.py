@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('todos', '0003_alter_todo_options_todo_order_and_more'),
     ]

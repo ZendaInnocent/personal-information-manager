@@ -22,7 +22,9 @@
        aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <form data-on:submit="@post('{% url "todos:todo-create" %}', {contentType: 'form'})">
+        <form method="post"
+              data-on:submit="@post('{% url 'todos:todo-create' %}', {contentType: 'form'})"
+              data-indicator:submitting>
           {% csrf_token %}
           <div class="modal-header">
             <h5 class="modal-title">{% trans "Add Todo" %}</h5>
@@ -36,7 +38,11 @@
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Close
             </button>
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+            <button type="submit"
+                    class="btn btn-primary"
+                    data-attr:disabled="$submitting"
+                    data-bs-dismiss="modal">
+              <span data-show="$submitting" class="spinner-border spinner-border-sm me-2"></span>
               {% trans 'Save' %}
             </button>
           </div>

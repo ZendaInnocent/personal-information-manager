@@ -20,7 +20,9 @@
         </svg>
       </a>
     </span>
-    <span class="btn" data-bs-toggle="modal" data-bs-target="#deleteTodoModal">
+    <span class="btn"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteTodoModal-{{ todo.id }}">
       <svg xmlns="http://www.w3.org/2000/svg"
            width="16"
            height="16"
@@ -36,7 +38,7 @@
 
 <!-- Delete Todo Modal -->
 <div class="modal fade"
-     id="deleteTodoModal"
+     id="deleteTodoModal-{{ todo.id }}"
      tabindex="-1"
      aria-labelledby="deleteTodoModal"
      aria-hidden="true">
