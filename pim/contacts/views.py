@@ -25,7 +25,7 @@ def contact_create_view(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Contact created successful.')
-            return redirect('contacts:index')
+            return redirect('contacts:contact-index')
     else:
         form = ContactForm(initial={'user': request.user})
 
@@ -49,7 +49,7 @@ def contact_update_view(request, slug):
         if form.is_valid():
             form.save()
             messages.success(request, 'Contact updated successful.')
-            return redirect('contacts:index')
+            return redirect('contacts:contact-index')
     else:
         form = ContactForm(instance=contact)
 
@@ -63,7 +63,7 @@ def contact_delete_view(request, slug):
     contact = get_object_or_404(Contact, user=request.user, slug=slug)
     contact.delete()
     messages.success(request, 'Contact deleted successful.')
-    return redirect('contacts:index')
+    return redirect('contacts:contact-index')
 
 
 @login_required

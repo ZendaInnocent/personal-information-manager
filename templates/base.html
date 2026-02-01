@@ -42,31 +42,37 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a href="{% url 'main:home' %}"
+                 class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                {% trans 'Home' %}
+              </a>
+            </li>
             {% if request.user.is_authenticated %}
               <li class="nav-item">
                 <a href="{% url 'todos:todo-index' %}"
-                   class="nav-link {% if request.path == '/todos/' %}active{% endif %}">
+                   class="nav-link {% if request.resolver_match.url_name == 'todo-index' %}active{% endif %}">
                   {% trans 'Todos' %}
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="{% url 'contacts:index' %}"
-                   class="nav-link {% if request.path == '/contacts/' %}active{% endif %}">
+                <a href="{% url 'contacts:contact-index' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'contact-index' %}active{% endif %}">
                   {% trans 'Contacts' %}
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{% url 'notes:notes-index' %}"
-                   class="nav-link {% if request.path == '/notes/' %}active{% endif %}">
+                   class="nav-link {% if request.resolver_match.url_name == 'notes-index' %}active{% endif %}">
                   {% trans 'Notes' %}
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="{% url 'appointments:index' %}"
-                   class="nav-link {% if request.path == 'appointments' %}active{% endif %}">
+                <a href="{% url 'appointments:appointment-index' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'appointment-index' %}active{% endif %}">
                   {% trans 'Appointments' %}
                 </a>
               </li>
@@ -74,28 +80,6 @@
             {% endif %}
           </ul>
           <ul class="navbar-nav ms-auto">
-            {% if request.user.is_authenticated %}
-              <li class="nav-item">
-                <a href="{% url 'account_logout' %}" class="btn btn-secondary">
-                  {% trans 'Log Out' %}
-                </a>
-              </li>
-
-            {% else %}
-              <li class="nav-item">
-                <a href="{% url 'account_login' %}"
-                   class="btn btn-primary me-2 {% if request.path == '/accounts/login/' %}active{% endif %} ">
-                  {% trans 'Log In' %}
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{% url 'account_signup' %}"
-                   class="btn btn-success {% if request.path == '/accounts/signup/' %}active{% endif %}">
-                  {% trans 'Sign Up' %}
-                </a>
-              </li>
-            {% endif %}
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle"
@@ -121,6 +105,29 @@
                 </form>
               </ul>
             </li>
+
+            {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a href="{% url 'account_logout' %}" class="btn btn-secondary">
+                  {% trans 'Log Out' %}
+                </a>
+              </li>
+
+            {% else %}
+              <li class="nav-item">
+                <a href="{% url 'account_login' %}"
+                   class="btn btn-primary me-2 {% if request.path == '/accounts/login/' %}active{% endif %} ">
+                  {% trans 'Log In' %}
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{% url 'account_signup' %}"
+                   class="btn btn-success {% if request.path == '/accounts/signup/' %}active{% endif %}">
+                  {% trans 'Sign Up' %}
+                </a>
+              </li>
+            {% endif %}
 
           </ul>
         </div>
