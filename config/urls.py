@@ -9,6 +9,7 @@ from pim.main import views as main_views
 urlpatterns = [
     path('set-language/', main_views.set_language, name='set-language'),
     path('__debug__', include('debug_toolbar.urls')),
+    path('__reload__/', include('django_browser_reload.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('rosetta/', include('rosetta.urls')),
 ]

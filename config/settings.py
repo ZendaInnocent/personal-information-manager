@@ -56,12 +56,12 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'debug_toolbar',
-    'django_htmx',
     'tinymce',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'phonenumber_field',
+    'django_browser_reload',
 ]
 
 MIDDLEWARE = [
@@ -69,14 +69,14 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django_htmx.middleware.HtmxMiddleware',
-    'pim.todos.middleware.HtmxMessageMiddleware',
+    'pim.todos.middleware.DatastarMessageMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
