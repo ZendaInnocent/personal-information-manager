@@ -1,8 +1,9 @@
 {% extends "base.html" %}
-{% load i18n crispy_forms_tags %}
+{% load i18n crispy_forms_tags static %}
 
 {% block content %}
-  <div class="d-flex justify-content-between align-items-center mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-4"
+       data-signals="{order: []}">
     <h1>{% trans 'Todos' %}</h1>
 
     <!-- Button trigger add todo modal -->
@@ -51,3 +52,24 @@
     </div>
   </div>
 {% endblock content %}
+
+{% block scripts %}
+  <script src="{% static 'js/Sortable.min.js' %}"></script>
+  <script>
+    const sortContainer = document.getElementById('todos-list');
+
+    new Sortable(sortContainer, {
+      animation: 150,
+      ghostClass: 'opacity-25',
+      onEnd: (evt) => {
+        sortContainer.dispatchEvent(
+          new CustomEvent('reordered', {detail: {
+            order: Array.from(sortContainer.children)
+                   .map(item => item.id)
+                   .map(id => id.split('-').pop()),
+          }})
+        )
+      }
+    })
+  </script>
+{% endblock scripts %}

@@ -33,37 +33,38 @@
         <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
       </svg>
     </span>
+    <span>
+      <!-- Delete Todo Modal -->
+      <div class="modal fade"
+           id="deleteTodoModal-{{ todo.id }}"
+           tabindex="-1"
+           aria-labelledby="deleteTodoModal"
+           aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <form method="post"
+                  data-on:submit="@post('{% url "todos:todo-delete" todo.id %}', {contentType: 'form'})">
+              {% csrf_token %}
+              <div class="modal-header">
+                <h5 class="modal-title">{% trans "Delete Todo" %}</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+              </div>
+              <div class="modal-body">Are you sure you want to delete?</div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  No
+                </button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+                  {% trans 'Yes' %}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </span>
   </div>
 </li>
-
-<!-- Delete Todo Modal -->
-<div class="modal fade"
-     id="deleteTodoModal-{{ todo.id }}"
-     tabindex="-1"
-     aria-labelledby="deleteTodoModal"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <form method="post"
-            data-on:submit="@post('{% url "todos:todo-delete" todo.id %}', {contentType: 'form'})">
-        {% csrf_token %}
-        <div class="modal-header">
-          <h5 class="modal-title">{% trans "Delete Todo" %}</h5>
-          <button type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"></button>
-        </div>
-        <div class="modal-body">Are you sure you want to delete?</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            No
-          </button>
-          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
-            {% trans 'Yes' %}
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>

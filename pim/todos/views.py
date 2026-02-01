@@ -1,9 +1,7 @@
-from datastar_py import consts
 from datastar_py.django import ServerSentEventGenerator as SSE
-from datastar_py.django import datastar_response
+from datastar_py.django import datastar_response, read_signals
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.messages import get_messages
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.template.response import TemplateResponse
@@ -80,10 +78,13 @@ def todo_toggle_view(request, id: int):
 
 
 @login_required
+@csrf_exempt
 @datastar_response
 def sort_todos(request):
+    signals = read_signals(request)
     user = request.user
-    current_todos_order = request.POST.getlist('todo')
+    current_todos_order = signals.get('order')
+    print(current_todos_order)
 
     new_ordered_todos = []
 
@@ -93,19 +94,7 @@ def sort_todos(request):
         new_ordered_todos.append(todo)
 
     user.todos.bulk_update(new_ordered_todos, fields=['order'])
-    messages.success(request, 'Tasks reordered successfully.')
-
-    messages_html = render_to_string(
-        'todos/partials/messages_container.html',
-        {'messages': get_messages(request)},
-        request=request,
-    )
 
     yield SSE.patch_elements(
         render_to_string('todos/partials/todo_list.html', {'todos': user.todos.all()})
-    )
-    yield SSE.patch_elements(
-        messages_html,
-        '#django-messages',
-        mode=consts.ElementPatchMode.PREPEND,
     )

@@ -1,4 +1,6 @@
-<ul class="list-group sortable" id="todos-list">
+<ul class="list-group sortable"
+    id="todos-list"
+    data-on:reordered="$order = event.detail.order; @post('{% url "todos:sort-todos" %}');">
   {% for todo in todos %}
     {% include "todos/partials/todo_item.html" with todo=todo %}
   {% endfor %}
