@@ -2,15 +2,16 @@
 
 <ul class="list-group" id="contacts">
   {% for contact in contacts %}
-  <li class="list-group-item btn text-start d-flex align-items-center justify-content-between"
-    hx-get="{% url 'contacts:contact-detail' contact.slug %}" hx-trigger="click" hx-target="#detail">
-    {{ contact }} {% include 'contacts/favorite.html' with contact=contact %}
-  </li>
+    <li class="list-group-item btn text-start d-flex align-items-center justify-content-between"
+        data-on:click="@get('{% url 'contacts:contact-detail' contact.slug %}')">
+      {{ contact }}
+      {% include 'contacts/favorite.html' with contact=contact %}
+    </li>
   {% empty %}
 
-  {% blocktrans %}
-  No Contacts yet.
-  {% endblocktrans %}
+    {% blocktrans %}
+    No Contacts yet.
+    {% endblocktrans %}
 
   {% endfor %}
 </ul>

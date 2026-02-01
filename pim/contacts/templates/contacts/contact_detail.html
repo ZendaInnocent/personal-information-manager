@@ -1,66 +1,67 @@
-{% load static %}
-{% load i18n %}
+{% load static i18n %}
 
-<div class="row mt-4 mt-md-0">
-  <div class="col-4 text-end">
-    <img src="{{ contact.avatar.url }}" alt="User Avatar" class="w-100 rounded-3">
-  </div>
-  <div class="col-8">
-    <h2>
-      {{ contact.name | capfirst }}
-      <span hx-post="{% url 'contacts:contact-toggle-favorite' contact.slug %}">
-        {% include 'contacts/favorite.html' %}
-      </span>
-    </h2>
-    {% if contact.title %}
-    <h4>{{ contact.title }}</h4>
-    {% endif %}
-    {% if contact.organization %}
-    <p class="mt-3">
-      {% trans 'Organization' %}: {{ contact.organization }}
-    </p>
-    {% endif %}
-    {% if contact.email %}
-    <p class="mt-3">
-      {% trans 'Email' %}: {{ contact.email }}
-    </p>
-    {% endif %}
-    <p class="mt-3">
-      {% trans 'Phone Number' %}: {{ contact.phone_number }}
-    </p>
-    <div class="d-flex">
-      <button class="btn btn-primary me-2" hx-get="{% url 'contacts:contact-edit' contact.slug %}" hx-target="#detail">
-        {% trans 'Edit' %}
-      </button>
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-        {% trans 'Delete' %}
-      </button>
+<div class="col-md-8 px-4" id="contact-detail">
+  <div class="row mt-4 mt-md-0">
+    <div class="col-4 text-end">
+      <img src="{{ contact.avatar.url }}"
+           alt="User Avatar"
+           class="w-100 rounded-3">
+    </div>
+    <div class="col-8">
+      <h2>
+        {{ contact.name | capfirst }}
+        <span>{% include 'contacts/favorite.html' %}</span>
+      </h2>
+      {% if contact.title %}<h4>{{ contact.title }}</h4>{% endif %}
+      {% if contact.organization %}
+        <p class="mt-3">{% trans 'Organization' %}: {{ contact.organization }}</p>
+      {% endif %}
+      {% if contact.email %}
+        <p class="mt-3">{% trans 'Email' %}: {{ contact.email }}</p>
+      {% endif %}
+      <p class="mt-3">{% trans 'Phone Number' %}: {{ contact.phone_number }}</p>
+      <div class="d-flex">
+        <button class="btn btn-primary me-2"
+                data-on:click="@get('{% url "contacts:contact-edit" contact.slug %}')">
+          {% trans 'Edit' %}
+        </button>
+        <!-- Button trigger modal -->
+        <button type="button"
+                class="btn btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal">{% trans 'Delete' %}</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">
-          {% trans 'Delete Contact' %}
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete <b>{{ contact.name }}</b>?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          {% trans 'No' %}
-        </button>
-        <button type="button" class="btn btn-danger" hx-delete="{% url 'contacts:contact-delete' contact.slug %}"
-          hx-target="body">
-          {% trans 'Yes' %}
-        </button>
+  <!-- Modal -->
+  <div class="modal fade"
+       id="deleteModal"
+       tabindex="-1"
+       aria-labelledby="deleteModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form method="post"
+              data-on:submit="@post('{% url "contacts:contact-delete" contact.slug %}', {contentType: 'form'})">
+          {% csrf_token %}
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">{% trans 'Delete Contact' %}</h5>
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete <b>{{ contact.name }}</b>?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              {% trans 'No' %}
+            </button>
+            <button type="submit" class="btn btn-danger">{% trans 'Yes' %}</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

@@ -1,23 +1,17 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 
-<form method="post"
-      enctype="multipart/form-data"
-      hx-post="{% url 'contacts:contact-edit' object.slug %}"
-      hx-target="#detail">
-  <h2>
-    {% blocktrans %}
+<div class="col-md-8 px-4" id="contact-detail">
+  <form method="post"
+        enctype="multipart/form-data"
+        {% if contact %}action="{% url 'contacts:contact-edit' contact.slug %}" {% else %} action="{% url 'contacts:contact-create' %}" {% endif %}>
+    <h2>
+      {% blocktrans %}
       {{ title }} Contact
       {% endblocktrans %}
-  </h2>
-  {% csrf_token %}
-  {{ form | crispy }}
-  <button class="btn btn-primary" type="submit">{% trans 'Save' %}</button>
-  {% if object %}
-    <button class="btn btn-secondary">{% trans 'Cancel' %}</button>
-  {% else %}
-    <a href="{% url 'contacts:index' %}" class="btn btn-secondary">
-      {% trans 'Cancel' %}
-    </a>
-  {% endif %}
-</form>
+    </h2>
+    {% csrf_token %}
+    {{ form | crispy }}
+    <button class="btn btn-primary" type="submit">{% trans 'Save' %}</button>
+  </form>
+</div>

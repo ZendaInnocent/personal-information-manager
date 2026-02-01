@@ -1,14 +1,10 @@
-from typing import Any
-
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.http import HttpRequest
-from django.http.response import HttpResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.response import TemplateResponse
-from django.urls import reverse_lazy
-from django.views import generic
+from django.views.decorators.http import require_http_methods
 
 from .forms import ContactForm
 from .models import Contact
@@ -16,73 +12,57 @@ from .models import Contact
 
 @login_required
 def index(request) -> TemplateResponse:
-    return TemplateResponse(request, 'contacts/index.html', {})
+    context = {'contacts': request.user.contacts.all()}
+    return TemplateResponse(request, 'contacts/index.html', context)
 
 
-class ContactListView(LoginRequiredMixin, generic.ListView):
-    context_object_name = 'contacts'
+@login_required
+def contact_create_view(request):
+    if request.method == 'POST':
+        form = ContactForm(data=request.POST, initial={'user': request.user})
 
-    def get_queryset(self):
-        return self.request.user.contacts.all()
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Contact created successful.')
+            return redirect('contacts:index')
+    else:
+        form = ContactForm(initial={'user': request.user})
 
-
-contact_list = ContactListView.as_view()
-
-
-class ContactCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Contact
-    form_class = ContactForm
-    extra_context = {'title': 'Add'}
-
-    def get_initial(self):
-        return {'user': self.request.user}
-
-    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        response = super().dispatch(request, *args, **kwargs)
-        response['HX-Trigger'] = 'loadcontacts'
-        return response
+    context = {'form': form, 'title': 'Add'}
+    return TemplateResponse(request, 'contacts/contact_form.html', context)
 
 
-contact_add = ContactCreateView.as_view()
+@login_required
+def contact_detail_view(request, slug):
+    contact = get_object_or_404(Contact, user=request.user, slug=slug)
+    return render(request, 'contacts/contact_detail.html', {'contact': contact})
 
 
-class ContactDetailView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
-    model = Contact
-    context_object_name = 'contact'
+@login_required
+def contact_update_view(request, slug):
+    contact = get_object_or_404(Contact, user=request.user, slug=slug)
 
-    def test_func(self) -> bool | None:
-        return self.get_object().user == self.request.user
+    if request.method == 'POST':
+        form = ContactForm(instance=contact, data=request.POST)
 
-    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        response = super().dispatch(request, *args, **kwargs)
-        response['HX-Trigger'] = 'loadcontacts'
-        return response
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Contact updated successful.')
+            return redirect('contacts:index')
+    else:
+        form = ContactForm(instance=contact)
 
-
-contact_detail = ContactDetailView.as_view()
-
-
-class ContactUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
-    model = Contact
-    form_class = ContactForm
-    extra_context = {'title': 'Edit'}
-
-    def test_func(self) -> bool | None:
-        return self.get_object().user == self.request.user
+    context = {'title': 'Edit', 'form': form, 'contact': contact}
+    return render(request, 'contacts/contact_form.html', context)
 
 
-contact_edit = ContactUpdateView.as_view()
-
-
-class ContactDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
-    model = Contact
-    success_url = reverse_lazy('contacts:index')
-
-    def test_func(self) -> bool | None:
-        return self.get_object().user == self.request.user
-
-
-contact_delete = ContactDeleteView.as_view()
+@login_required
+@require_http_methods(['POST'])
+def contact_delete_view(request, slug):
+    contact = get_object_or_404(Contact, user=request.user, slug=slug)
+    contact.delete()
+    messages.success(request, 'Contact deleted successful.')
+    return redirect('contacts:index')
 
 
 @login_required

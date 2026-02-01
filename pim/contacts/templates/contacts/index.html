@@ -1,49 +1,54 @@
-{% extends 'base.html' %}
-{% load i18n %}
-{% load static %}
+{% extends "base.html" %}
+{% load i18n static %}
 
 {% block content %}
-<h3>{% trans 'Contacts' %}</h3>
-
-<div class="row">
-  <div class="col-md-4 border-end">
-    <div class="d-flex align-items-center justify-content-between">
-      <input class="form-control me-2" type="search" placeholder="{% trans 'Search' %}" aria-label="Search" name="q"
-        hx-get="{% url 'contacts:contact-search' %}" hx-trigger="keyup changed delay:500ms, search"
-        hx-target="#contacts" hx-indicator=".htmx-indicator">
-      <button class="btn btn-outline-primary" hx-get="{% url 'contacts:contact-add' %}" hx-target="#detail">
-        {% trans 'Add' %}
-      </button>
-    </div>
-    <hr>
-    <div class="spinner-border text-primary htmx-indicator" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-    <ul class="list-group" id="contacts" hx-get="{% url 'contacts:contact-list' %}"
-      hx-trigger="load, loadcontacts from:body">
-    </ul>
+  <div class="d-flex align-items-center justify-content-between col-md-4 mb-3 pe-3">
+    <h3>{% trans "Contacts" %}</h3>
+    <button class="btn btn-outline-primary"
+            data-on:click="@get('{% url "contacts:contact-create" %}')">
+      {% trans 'Add' %}
+    </button>
   </div>
 
-  <div class="col-md-8 px-4" id="detail">
-    <h3 class="my-3">No contact selected</h3>
-    <div class="row mt-4 mt-md-0">
-      <div class="col-md-4">
-        <div class="bg-secondary h-100 w-100 rounded"></div>
+  <div class="row">
+    <div class="col-md-4 border-end">
+      <div class="d-flex align-items-center justify-content-between">
+        <input class="form-control"
+               type="search"
+               placeholder="{% trans 'Search' %}"
+               aria-label="Search"
+               name="q"
+               hx-get="{% url 'contacts:contact-search' %}"
+               hx-trigger="keyup changed delay:500ms, search"
+               hx-target="#contacts"
+               hx-indicator=".htmx-indicator">
       </div>
-      <div class="col-md-8 mt-3 mt-md-0">
-        <div class="bg-secondary mb-2 w-50 rounded" style="height: 1.5rem;"></div>
-        <div class="bg-secondary mb-2 w-75 rounded" style="height: 1.5rem;"></div>
-        <div class="bg-secondary mb-2 w-25 rounded" style="height: 1.5rem;"></div>
-        <div class="bg-secondary mb-2 w-50 rounded" style="height: 1.5rem;"></div>
-        <div class="d-flex h-100">
-          <div class="bg-secondary mb-2 w-25 me-2 rounded" style="height: 1.5rem;">
-          </div>
-          <div class="bg-secondary mb-2 w-25 rounded" style="height: 1.5rem;">
+      <hr>
+      {% comment %} <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div> {% endcomment %}
+
+      {% include "contacts/contact_list.html" %}
+    </div>
+
+    <div class="col-md-8 px-4" id="contact-detail">
+      <h3 class="my-3">No contact selected</h3>
+      <div class="row mt-4 mt-md-0">
+        <div class="col-md-4">
+          <div class="bg-secondary h-100 w-100 rounded"></div>
+        </div>
+        <div class="col-md-8 mt-3 mt-md-0">
+          <div class="bg-secondary mb-2 w-50 rounded" style="height: 1.5rem;"></div>
+          <div class="bg-secondary mb-2 w-75 rounded" style="height: 1.5rem;"></div>
+          <div class="bg-secondary mb-2 w-25 rounded" style="height: 1.5rem;"></div>
+          <div class="bg-secondary mb-2 w-50 rounded" style="height: 1.5rem;"></div>
+          <div class="d-flex h-100">
+            <div class="bg-secondary mb-2 w-25 me-2 rounded" style="height: 1.5rem;"></div>
+            <div class="bg-secondary mb-2 w-25 rounded" style="height: 1.5rem;"></div>
           </div>
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
-</div>
 {% endblock content %}
